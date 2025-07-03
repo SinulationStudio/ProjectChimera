@@ -16,29 +16,29 @@ This is the comprehensive design bible for Project Cygnus. It is the single sour
 ## [2] Gameplay Systems & Mechanics
 *This section details the moment-to-moment rules and systems the player interacts with.*
 *   **[2.1] The Core Loop: The 'Prestige Roguelite'**
-    *   [2.1.1] The Run Structure: The 'Gauntlet' & Pacing
-    *   [2.1.2] The Hub: The Meta-Progression Space Between Runs
-    *   [2.1.3] Post-Run Sequence: The 'Siphon Choice' & Resource Conversion
+    *   [2.1.1] The Run Structure - The 'Gauntlet' & Pacing
+    *   [2.1.2] Between Runs Meta-Progression - The Hub
+    *   [2.1.3] Post-Run Sequence - Essence Conversion
 *   **[2.2] The Sex Combat**
     *   [2.2.1] Encounter Flow & The 'Escalation State' System
-    *   [2.2.2] Core Resources: `Tension` & `Arousal`.
-    *   [2.2.3] The Defensive System: `Focus` -> `Inhibition` -> `Composure`
-    *   [2.2.4] Key States: `Guarded` & `Exposed`
+    *   [2.2.2] Core Resources: Tension & Arousal
+    *   [2.2.3] The Defensive System: Focus -> Inhibition -> Composure
+    *   [2.2.4] Key States: Guarded & Exposed
     *   [2.2.5] The 'Positional' System
 *   **[2.3] Player & NPC Systems**
     *   [2.3.1] Player Systems: Stats, Resources, and Outfits
-    *   [2.3.2] NPC Design Philosophy: The 'Human-First' Mandate & Asymmetrical Action Design
+    *   [2.3.2] NPC Design Philosophy
 *   **[2.4] The Card System**
-    *   [2.4.1] Card Design Constitution: The 'Silhouette, Harmony, and Prompt' Tests
+    *   [2.4.1] Card Design Constitution
     *   [2.4.2] Card Classifications & Keywords
-    *   [2.4.3] Core Mechanics: 'Modal Cards, Full Discard, and Draw up to 5'
-    *   [2.4.4] Starting Deck: 'The Professional's Primer'
-    *   [2.4.5] Master Card List (Placeholder for all future cards)
+    *   [2.4.3] Core Mechanics
+    *   [2.4.4] Starting Deck
+    *   [2.4.5] Master Card List (Placeholder)
 *   **[2.5] Meta-Progression**
-    *   [2.5.1] Meta-Currencies: `Refined Data` & `Sentience Points`
-    *   [2.5.2] The 'Mirror Trees' System: Corporate vs. Sentience Skill Trees
-    *   [2.5.3] The "Hybrid Commitment" Model: Allegiance Locks & Respec Rules
-    *   [2.5.4] Player Loadouts: The 'Chassis' System
+    *   [2.5.1] Meta-Currencies - Refined Data & Sentience Points
+    *   [2.5.2] The Mirror Skill Trees System - Corporate vs. Sentience
+    *   [2.5.3] The Hybrid Commitment Model - Allegiance Locks & Respec Rules
+    *   [2.5.4] Player Loadouts - The Chassis System
 
 ---
 
