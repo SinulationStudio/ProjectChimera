@@ -16,17 +16,17 @@ This is the comprehensive design bible for Project Cygnus. It is the single sour
 ## 2.0 Gameplay Systems & Mechanics
 *This section details the moment-to-moment rules and systems the player interacts with.*
 *   **[2.1] The Core Loop: The "Prestige Roguelite"**
-    *   [2.1.1] The Run Structure: The "Gauntlet" & Pacing (Acts, Node Counts, Time Budget).
-    *   [2.1.2] The Hub: The meta-progression space between runs.
-    *   [2.1.3] Post-Run Sequence: The "Siphon Choice" and resource conversion.
+    *   [2.1.1] The Run Structure: The "Gauntlet" & Pacing.
+    *   [2.1.2] The Hub: The Meta-Progression Space Between Runs.
+    *   [2.1.3] Post-Run Sequence: The "Siphon Choice" & Resource Conversion.
 *   **[2.2] The Sex Combat**
     *   [2.2.1] Encounter Flow & The "Escalation State" System.
     *   [2.2.2] Core Resources: `Tension` & `Arousal`.
-    *   [2.2.3] The Defensive System: "Shield (`Focus`) -> Armor (`Inhibition`) -> Body (`Composure`)."
-    *   [2.2.4] Key States: The `Guarded` Buff (Graded & Progressive) and the `Exposed` State.
-    *   [2.2.5] The "Positional Stance" System (Design for a high-impact sub-game).
+    *   [2.2.3] The Defensive System: Focus -> Inhibition -> Composure
+    *   [2.2.4] Key States: `Guarded` & `Exposed`
+    *   [2.2.5] The "Positional" System
 *   **[2.3] Player & NPC Systems**
-    *   [2.3.1] Player Systems: Starting Stats, Outfits, and the `Wardrobe & Maintenance` mechanic.
+    *   [2.3.1] Player Systems: Stats, Resources, and Outfits.
     *   [2.3.2] NPC Design Philosophy: The "Human-First" Mandate & Asymmetrical Action Design.
 *   **[2.4] The Card System**
     *   [2.4.1] Card Design Constitution: The "Silhouette," "Harmony," and "Prompt" tests.
