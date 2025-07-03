@@ -1,0 +1,27 @@
+# [2.2.4] Key States: `Guarded` & `Exposed`
+
+These two mutually exclusive states define a character's defensive posture and vulnerability during an encounter. The transition between them is a critical strategic turning point, driven by the `Inhibition` system.
+
+## The `Guarded` State
+*   **Condition:** A character is `Guarded` as long as they have 1 or more points of `Inhibition`.
+*   **Mechanics:** The `Guarded` buff provides significant protection against physical advances. This buff is tiered and degrades as `Inhibition` is depleted.
+    *   **The "Graded Guard" System:** The buff has two numerical grades tied to body zones: `Guarded [Upper]: X` and `Guarded [Lower]: Y`. These numbers represent a percentage damage reduction for `Physical` cards targeting that specific zone.
+    *   **Progressive Debuff:** As `Inhibition` crosses pre-set thresholds (e.g., an NPC becomes topless), the corresponding `Guarded` grade is permanently lowered or removed for the rest of the encounter.
+
+### **Strategic Implications of the `Guarded` System**
+The `Guarded` state creates a deep tactical puzzle during the "Foreplay" phase and enables multiple viable deck-building strategies.
+
+*   **Card Efficiency Trade-offs:**
+    *   **`Verbal` Cards:** Are immune to the `Guarded` buff, making them the most reliable tool for breaking down `Inhibition`. However, their base `Composure` damage is generally lower. This makes them a consistent, safe "armor-piercing" strategy.
+    *   **`Physical [Upper Body]` Cards:** Offer a middle ground. They are more efficient at dealing `Composure` damage than `Verbal` cards but are moderately penalized by `Guarded [Upper]`. A deck focused on these cards aims to break the first defensive layer quickly to enable its primary damage source.
+    *   **`Physical [Lower Body]` & `Intimate` Cards:** These are the highest damage-per-AP cards in the game. However, they are almost completely negated by the high `Guarded [Lower]` values at the start of an encounter. A deck focused on these is a "late-game" build, accepting a slow start for an overwhelmingly powerful finishing phase once all `Inhibition` is gone.
+
+*   **Player Agency:** This system allows the player to choose their path. They can build a fast "top-down" deck, a greedy "late-game" lower body deck, a consistent `Verbal` deck, or a hybrid that can adapt to any defensive setup.
+
+## The `Exposed` State
+*   **Condition:** A character becomes `Exposed` the moment their `Inhibition` bar is fully depleted.
+*   **Mechanics:** This is a major state change with significant consequences.
+    1.  **Loss of `Guarded` Buff:** All damage reduction is removed. The character is fully vulnerable.
+    2.  **Unlocks `Intimate` Abilities:** An attacker's most powerful, explicit `Intimate` abilities are **mechanically locked** until their **target is `Exposed`**.
+
+*   **Strategic Purpose:** The `Exposed` state marks the transition to the "Intimacy" phase. Breaking an opponent's `Inhibition` is a primary objective. Protecting your own is a core survival goal, as becoming `Exposed` unlocks the opponent's most dangerous attacks.
