@@ -19,7 +19,7 @@ This is the comprehensive design bible for Project Cygnus. It is the single sour
     *   [2.1.1] The Run Structure: The "Gauntlet" & Pacing (Acts, Node Counts, Time Budget).
     *   [2.1.2] The Hub: The meta-progression space between runs.
     *   [2.1.3] Post-Run Sequence: The "Siphon Choice" and resource conversion.
-*   **[2.2] The Sex Minigame: Core Combat**
+*   **[2.2] The Sex Combat**
     *   [2.2.1] Encounter Flow & The "Escalation State" System.
     *   [2.2.2] Core Resources: `Tension` & `Arousal`.
     *   [2.2.3] The Defensive System: "Shield (`Focus`) -> Armor (`Inhibition`) -> Body (`Composure`)."
