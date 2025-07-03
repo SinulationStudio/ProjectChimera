@@ -1,0 +1,19 @@
+<!-- Filename: LDD/2_Gameplay_Systems/2.2.4_Key_States_Guarded_Exposed.md -->
+
+# [2.2.4] Key States: `Guarded` & `Exposed`
+
+These two mutually exclusive states define a character's defensive posture and vulnerability during an encounter. The transition between them is a critical strategic turning point.
+
+## The `Guarded` State
+*   **Condition:** A character is `Guarded` as long as they have 1 or more points of `Inhibition`.
+*   **Mechanics:** The `Guarded` buff provides significant protection, primarily against physical advances. This buff is tiered and degrades as `Inhibition` is depleted.
+    *   **The "Graded Guard" System:** The buff has two numerical grades tied to body zones: `Guarded [Upper]: X` and `Guarded [Lower]: Y`. These numbers represent a percentage damage reduction for `Physical` cards targeting that zone (e.g., `G[U]: 3` = 30% reduction).
+    *   **Progressive Debuff:** As `Inhibition` crosses pre-set thresholds (e.g., an NPC becomes topless), the corresponding `Guarded` grade is permanently lowered or removed for the rest of the encounter.
+*   **Strategic Purpose:** The `Guarded` state creates the "Foreplay" phase of combat. Its mechanics force the player to use `Verbal` attacks (which bypass the guard) or targeted `Physical` attacks to break down defenses before they can unleash their full power.
+
+## The `Exposed` State
+*   **Condition:** A character becomes `Exposed` the moment their `Inhibition` bar is fully depleted.
+*   **Mechanics:** This is a major state change with significant consequences.
+    1.  **Loss of `Guarded` Buff:** All damage reduction from the `Guarded` state is removed. The character is now fully vulnerable to all attack types.
+    2.  **Unlocks `Intimate` Abilities:** This is the most critical mechanic. An attacker's most powerful, explicit `Intimate` abilities are mechanically locked and **cannot be used** until their **target is `Exposed`**.
+*   **Strategic Purpose:** The `Exposed` state marks the transition to the "Intimacy" phase of combat. For the player, breaking an NPC's `Inhibition` to make them `Exposed` is a primary objective. For the NPC, making the player `Exposed` is their key to victory, as it unlocks their most devastating attacks. Protecting your own `Guarded` state is a core defensive goal.
