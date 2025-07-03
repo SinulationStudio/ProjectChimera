@@ -1,0 +1,33 @@
+<!-- Status: V2.0 Feature - Design is conceptual. MVE will use a simplified version. -->
+
+# [2.2.5] The "Positional" System
+
+The "Positional" system represents the ultimate offensive maneuvers. These are not simple cards but high-cost abilities that initiate a unique "sub-game" or "grapple phase," fundamentally changing the encounter's rules for a short period. The card name convention is **`Position: [Name]`**.
+
+## Core Concept
+*   `Position:` cards are powerful techniques that, when played, transition the encounter into a specific sexual position.
+*   This initiates a high-risk, high-reward sub-game where the player can deal massive `Composure` damage but is also vulnerable to unique counter-attacks.
+
+## Acquiring `Position:` Cards
+*   These cards are not in the standard card pool. They are unlocked for a run by defeating a **"Rival Encounter" (Mid-Boss)**, at which point the player chooses one of their unlocked "Positional Blueprints" to install.
+
+## NPC Positional Abilities
+*   High-tier NPCs and Bosses may also have their own `Position:` abilities.
+*   These will not use the full player-facing sub-game but will be represented as a powerful, multi-stage "ultimate" attack. The NPC might spend a turn "building up," telegraphing the move, and then unleash a long, high-damage animation sequence on their next turn.
+
+## Mechanics of the Player's Positional Sub-Game
+
+### **Primary Model: "Resource Management Sub-Game"**
+1.  **Initiation Cost:** Playing a `Position:` card has a very high resource cost (e.g., AP, `Arousal`, `Tension`) and a **self-inflicted `Player Composure` cost**, which may be applied over time.
+2.  **State Change:** The UI changes, and the player is given a temporary hand of cards unique to that position.
+3.  **New Resources:** The sub-game uses its own resources: `Stamina` (to play positional cards) and `Hold` (the "health" of the position).
+4.  **`Resistance` Mechanic:** NPCs have a `Resistance` value within the stance that mitigates damage, forcing the player to use setup cards and combos rather than spamming one move.
+
+### **Alternative Model for Exploration: "Rhythm Sub-Game"**
+*   An alternative or complementary idea is to make the sub-game a test of timing and rhythm.
+*   **Concept:** Once a `Position` is initiated, a rhythmic mini-game begins. The player is prompted to hit a key (e.g., `Spacebar`) in time with the animation's key moments (e.g., at the peak of a thrust).
+*   **Rewards:** Perfect timing could grant bonus `Composure` damage, generate extra `Stamina` to prolong the stance, or increase the chance of a "favorable" NPC reaction. Poor timing could deal less damage or increase the chance of the NPC breaking the hold.
+*   **Feasibility:** This would require a different style of development but could offer a more visceral, action-oriented experience compared to the purely strategic card-based model. This remains an open idea for prototyping.
+
+## MVE Implementation
+For the initial release, `Position:` cards will be simplified. They will likely be high-cost, high-impact `Finisher` techniques without the full sub-game mechanics. The full systems described here are planned for major content updates.
