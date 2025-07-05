@@ -1,5 +1,5 @@
 <!-- Filename: LDD/README.md -->
-<!-- This is the Master Table of Contents for the Project Chimera LDD. All links have been verified. -->
+<!-- This is the Master Table of Contents for the Project Chimera LDD. All links have been manually verified against the live GitHub repository. -->
 
 # Project Chimera - Living Design Document (v2.0)
 
