@@ -66,30 +66,36 @@ This is the comprehensive design bible for Project Cygnus. It is the single sour
     *   [4.1.1] Engine & Renderer - Godot 4, Compatibility Renderer, Rationale
     *   [4.1.2] Version Control - Git Setup
     *   [4.1.3] Development Environment - VS Code Settings & Recommended Extensions
-    *   [4.1.4] Recommended Addons - Dialogue Manager, TweenAnimator, etc
+    *   [4.1.4] Recommended Addons
 *   **[4.2] Art & Animation Direction**
-    *   [4.2.1] Core Art Style - 'Stylized Realism'
-    *   **[4.2.2] Presentation & Perspective - First-Person View & The 'Cinematic Turn'**
+    *   [4.2.1] Core Art Style - Stylized Realism
+    *   [4.2.2] Presentation & Perspective - First-Person View & The Cinematic Turn
     *   [4.2.3] GenAI Asset Pipeline - Workflow for Generating Images & Videos
-*   **[4.3] UI / UX Design**
+*   **[4.3] UI & UX Design**
     *   [4.3.1] HUD Layout - In-Encounter UI Elements
-    *   [4.3.2] Diegetic Menus - The "Clue-like" Interface for Runs
+    *   [4.3.2] Progression UI Node Map & Hub Menus
 *   **[4.4] Audio Direction**
     *   [4.4.1] Music Philosophy
-    *   [4.4.2] Sound Effect Design (UI, Actions)
+    *   [4.4.2] Sound Effect (SFX) Design
 
 ---
 
-## [5] Production & Balancing
-*This section details our development strategy and how we measure success*
-*   **[5.1] Development Strategy - The 'Engine and One Perfect Slice' (MVE)**
-*   **[5.2] Post-Launch Strategy - The 'Mastery & Escalation' System & Narrative Paths**
-*   **[5.3] Balance & Simulation Strategy**
-    *   [5.3.1] The 'Dual-Profile' Simulation Framework (Tactician vs. Virtuoso)
-    *   [5.3.2] Master List of Key Performance Indicators (KPIs)
+## [5] Production & Release Strategy
+*This section details our plan for building and launching the game.*
+*   **[5.1] Development Model - The Engine and One Perfect Slice (MVE)**
+*   **[5.2] Funding & Community Model - Patreon & Steam**
+*   **[5.3] Post-Launch Roadmap - Content Updates & Narrative Paths**
+
+---
+
+## [6] Balancing & Data
+*This section details our methodology for tuning the game and measuring success.*
+*   **[6.1] Balancing Philosophy - The Player's Journey of Discovery**
+*   **[6.2] The Dual-Profile Simulation Framework**
+*   **[6.3] Master List of Key Performance Indicators (KPIs)**
 
 ---
 
 ## [99] Design Archive
 *A graveyard for discarded ideas, kept for historical context.*
-*   **[99.1] Archived Concepts:** A detailed list of discarded models like Social Engineering, Digital ICE, etc
+*   **[99.1] Archived Concepts:**
