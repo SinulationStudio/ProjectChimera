@@ -1,0 +1,52 @@
+<!-- Filename: LDD/[3] Narrative & World/[3.3] Dialogue & Event Systems/[3.3.2] The 'Key Moments' Dialogue Approach.md -->
+
+# [3.3.2] The 'Key Moments' Dialogue Approach
+
+This document outlines the design philosophy for when and how dialogue is presented during gameplay. The core principle is to make dialogue feel significant and impactful by tying it to specific, meaningful state changes rather than frequent, repetitive actions.
+
+## Core Philosophy: Punctuate, Don't Saturate
+To avoid player fatigue and prevent dialogue from becoming skippable "fluff," we will not trigger unique lines for every single card play. Instead, dialogue is reserved for key moments in an encounter, serving as a narrative reward or a signal of a shift in the tactical situation. This makes each line land with more weight.
+
+This system will be powered by the **`Dialogue Manager`** addon for robust implementation.
+
+---
+
+## Defined Dialogue Triggers
+
+The following events are designated as primary triggers for unique NPC dialogue lines during a Sex Combat encounter.
+
+**1. Start of Encounter**
+*   **Trigger:** The encounter begins.
+*   **Function:** To establish the NPC's personality, the context for the encounter, and to react to the player's state based on the **"NPC Memory" System**. This is the most complex dialogue check, pulling from all five indices to deliver a unique opening line.
+*   **Status:** Mandatory for every NPC.
+
+**2. `Inhibition` Thresholds Crossed (Clothing State Changes)**
+*   **Trigger:** The moment an NPC's `Inhibition` bar drops below a pre-set threshold, causing a change in their clothing state (e.g., becoming topless).
+*   **Function:** To provide a direct, reactive reward for the player's progress. The NPC's line should reflect their reaction to this new level of intimacy and vulnerability.
+*   **Status:** Highly Recommended for all major thresholds. We can write 2-3 variations per trigger to enhance replayability.
+
+**3. Player Becomes `Exposed`**
+*   **Trigger:** The moment the player's own `Inhibition` bar is broken.
+*   **Function:** To signal a critical shift in the power dynamic. The NPC's tone must change, becoming more confident, aggressive, or predatory, as they now have a significant advantage.
+*   **Status:** Mandatory. This is a crucial game state change that must be clearly communicated to the player.
+
+**4. First Use of a Signature/Ultimate Ability**
+*   **Trigger:** The first time an NPC uses their most powerful, `Exposed`-state unlocked ability in an encounter.
+*   **Function:** To add emphasis and telegraph the danger of their ultimate move. It's a cinematic "super move" callout.
+*   **Status:** Recommended for all boss/rival abilities and the key abilities of standard NPCs.
+
+**5. Low `Composure` State**
+*   **Trigger:** The NPC's `Composure` drops below a certain threshold (e.g., 25%).
+*   **Function:** To provide clear feedback that the player is close to victory. The NPC's dialogue should become more strained, breathy, or desperate, indicating they are losing control.
+*   **Status:** Highly Recommended. This serves as a vital "boss is almost dead" indicator.
+
+**6. Post-Encounter Storylet**
+*   **Trigger:** Immediately following a victory.
+*   **Function:** A skippable, slightly longer dialogue scene (e.g., ~30 seconds) to develop the NPC's specific side-story, provide world-building, or drop hints about the larger plot (e.g., "matrix glitches").
+*   **Status:** Mandatory. This is a key vector for our narrative delivery.
+
+By adhering to this event-driven approach, we ensure that dialogue remains a high-impact, rewarding element of the game rather than a repetitive distraction.
+
+---
+| | [▲ Return to Table of Contents](../../README.md) | |
+| :--- | :---: | ---: |

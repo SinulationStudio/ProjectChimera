@@ -1,0 +1,42 @@
+<!-- Filename: LDD/[3] Narrative & World/[3.2] Character Dossiers/[3.2.4] Rival Essence Hunters (Boss Archetypes).md -->
+
+# [3.2.4] Rival Essence Hunters (Boss Archetypes)
+
+This document outlines the concept, narrative role, and mechanical design of the Rival Essence Hunters (EHs), who serve as the primary boss encounters in Project Cygnus.
+
+## Core Concept
+Rival EHs are the "bosses" of the Server Gauntlet runs. They are other advanced androids, similar in function to the player (Unit 1618), who are also operating within the VR simulation. They represent a direct competitor and a significant escalation in challenge. An encounter with a Rival EH is a duel between peers, a true test of skill and build efficiency.
+
+## Narrative Role
+*   **The Competition:** Rival EHs create a sense of a wider, competitive world. The player is not the only operative. This introduces a direct antagonist within the context of a run.
+*   **The Mirror:** They are a dark reflection of the player. They might be from a competing corporation trying to steal data, or they could be other units from our own corporation competing for performance metrics. This allows for varied motivations.
+*   **The Gatekeeper:** They serve as the "Act Bosses" of the run structure, representing a significant barrier that the player must overcome to complete a full gauntlet.
+
+## Mechanical Design Philosophy
+Rival EHs are designed to be mechanically superior to standard NPCs and to challenge the player in unique ways. They are a "deck check" and a "skill check."
+
+*   **Higher Stats:** They will have significantly higher `Composure` and `Inhibition` pools than standard NPCs in their tier.
+*   **Complex AI:** Their AI will not be a simple rotation. They will use "build-up" and "payoff" logic, similar to the player. They will set up debuffs before unleashing a powerful attack, or defend themselves intelligently when their `Composure` is low.
+*   **Use of Player Mechanics:** Rivals are the only enemies who will make regular use of mechanics typically reserved for the player.
+    *   They can generate and utilize their own `Focus` shields frequently.
+    *   They may use abilities that directly interact with the player's `Tension` and `Arousal` pools (e.g., "Drain 10 Player Arousal").
+    *   High-tier rivals will have their own **`Position`-like ultimate abilities**, creating a defensive sub-game for the player.
+*   **Focus on Breaking the Player:** A Rival EH's primary strategy will be to aggressively target the player's `Inhibition` to get them into the `Exposed` state as quickly as possible, thereby unlocking their own most devastating attacks.
+
+## Example Rival Archetypes (Conceptual)
+
+### **The "Bulldozer" (Tier 1 Boss)**
+*   **Concept:** An earlier, less sophisticated EH model that relies on brute force.
+*   **Strategy:** Uses simple, high-damage abilities that primarily target the player's `Inhibition`. It has few defensive moves and tries to win through overwhelming, predictable aggression. Its deck is a simple puzzle for the player to solve: "Can you withstand the onslaught?"
+
+### **The "Puppeteer" (Tier 2 Boss)**
+*   **Concept:** A rival who specializes in psychological warfare and control.
+*   **Strategy:** Its abilities focus on disrupting the player's hand and resources. It might force the player to discard cards, increase the AP cost of cards, or steal the player's `Tension`. Its direct `Composure` damage is lower, but it aims to win by making the player unable to execute their own strategy.
+
+### **The "Perfected Model" (Tier 3 Boss)**
+*   **Concept:** A rival EH from a competing corporation that is a peer to Unit 1618. A true mirror match.
+*   **Strategy:** This boss will have a complex, multi-phase fight. It will use a balanced strategy of offense, defense, and disruption. It will have a powerful, named `Position:` ultimate ability that the player must survive. This is the ultimate test of a player's build and skill.
+
+---
+| | [▲ Return to Table of Contents](../../README.md) | |
+| :--- | :---: | ---: |

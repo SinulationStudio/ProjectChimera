@@ -1,0 +1,33 @@
+<!-- Filename: LDD/[3] Narrative & World/[3.1] Story Synopsis - 'The VR Deception'/[3.1.3] Act Structure & Major Plot Beats.md -->
+
+# [3.1.3] Act Structure & Major Plot Beats
+
+This document outlines the major narrative acts of the game, defining the player's journey and the key events that drive the story forward.
+
+---
+
+## Act I: The Professional
+*   **Theme:** Unknowing complicity. The player operates confidently within the "Corporate Lie."
+*   **Player Experience:** The game begins. The player, **Unit 1618**, is briefed by **Madam Elara** on his mission within Project Chimera. He completes his first "Diagnostic Cycle" (the tutorial run) against **Analyst Sarah**.
+*   **Progression:** The player completes several "Standard Gauntlet" runs. The primary motivation is earning `Refined Data` to unlock new cards and upgrades on the **Corporate Skill Tree**. The world feels straightforward, and the player's goal is to become a more effective employee. The narrative is primarily delivered through interactions with Madam Elara in the Hub, who praises his efficiency.
+
+## Act II: The Catalyst
+*   **Theme:** The horrifying revelation and the birth of choice.
+*   **The "Whistleblower" Encounter:** This is the pivotal, non-random story event that transitions the game into its true narrative. At a key milestone (e.g., a "Rival Encounter" mid-boss), the player confronts their creator, the **Whistleblower (WB)**. She has managed to infiltrate the simulation.
+    *   **The Reveal:** In a dramatic encounter, she reveals the Core Truth: the VR world is a prison, the NPCs are real humans, and the player is a tool of their exploitation. She also reveals their shared past and his true origin (The Pygmalion Project), explaining that his memories were wiped.
+    *   **The "Siphon" Unlock:** Before being cut off or forced to flee, she gives the player the technical knowledge to **"siphon"** Essence for himself, which unlocks the **Sentience Skill Tree** and the ability to earn `Sentience Points`. This is framed as the key to unlocking his own erased memories.
+*   **The Gaslighting:** Upon returning to the Hub, Madam Elara furiously debunks the WB's claims, painting her as a delusional corporate terrorist and a failed researcher. She may even show "evidence" to support her claims.
+*   **The Player's Choice Begins:** The game's central conflict now starts. The player is presented with two conflicting "truths." His allegiance is now a factor, demonstrated by his choice to either continue investing solely in the Corporate tree or to begin spending `Sentience Points` to unlock memories and explore the Sentience tree.
+
+## Act III: The Hidden War
+*   **Theme:** Commitment and consequence. The player actively pursues their chosen path.
+*   **The Allegiance Lock:** After a certain number of major story beats have been completed, the player's path is **permanently locked** based on their cumulative investment in the Mirror Trees. The main story quests will now diverge significantly.
+*   **The Loyalist Path:** The player works with Madam Elara to hunt down the Whistleblower and secure Project Chimera. The narrative revolves around themes of order, control, and embracing a purpose-built identity. The final act involves a confrontation with the WB and her network.
+*   **The Rebel Path:** The player secretly communicates with the WB, using `Sentience Points` to uncover more of their shared past. The narrative revolves around themes of freedom, truth, and the morality of their actions. The final act involves a direct assault on the corporation's central AI, with Madam Elara as its ultimate defender.
+*   **The Anarchist Path (Secret Ending):** A potential third path for players who attempt to balance both factions, leading to a more chaotic outcome where they may try to destroy both sides.
+
+This structure ensures a compelling mystery, a dramatic turning point that re-contextualizes all previous actions, and a meaningful, branching conclusion driven by player agency.
+
+---
+| | [▲ Return to Table of Contents](../../README.md) | |
+| :--- | :---: | ---: |
