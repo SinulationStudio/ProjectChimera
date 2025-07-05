@@ -20,7 +20,7 @@ Welcome to the central design document for Project Chimera (working title `NSFW_
 *   [1.1 Game Concept & High-Level Pitch](./[1]%20Core%20Vision%20&%20Philosophy/[1.1]%20Game%20Concept%20&%20High-Level%20Pitch.md)
 *   [1.2 Design Pillars & Player Fantasy](./[1]%20Core%20Vision%20&%20Philosophy/[1.2]%20Design%20Pillars%20&%20Player%20Fantasy.md)
 *   [1.3 Key Inspirations](./[1]%20Core%20Vision%20&%20Philosophy/[1.3]%20Key%20Inspirations.md)
-*   [1.4 Target Audience, Platform, & Funding Strategy](./[1]%20Core%20Vision%20&%20Philosophy/[1.4]%20Target%20Audience,%20Platform,%20%26%20Funding%20Strategy.md)
+*   [1.4 Target Audience & Platform](./[1]%20Core%20Vision%20&%20Philosophy/[1.4]%20Target%20Audience%20%26%20Platform.md)
 
 ### [2] Gameplay Systems & Mechanics
 *This section details the moment-to-moment rules and systems the player interacts with.*
