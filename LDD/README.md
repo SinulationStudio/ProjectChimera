@@ -1,5 +1,5 @@
 <!-- Filename: LDD/README.md -->
-<!-- This is the Master Table of Contents for the Project Chimera LDD. All links have been manually verified against the live GitHub repository. -->
+<!-- This is the Master Table of Contents for the Project Chimera LDD. All links have been manually constructed and verified against the live GitHub repository to ensure functionality. -->
 
 # Project Chimera - Living Design Document (v2.0)
 
@@ -20,7 +20,7 @@ Welcome to the central design document for Project Chimera (working title `NSFW_
 *   [1.1 Game Concept & High-Level Pitch](./[1]%20Core%20Vision%20&%20Philosophy/[1.1]%20Game%20Concept%20&%20High-Level%20Pitch.md)
 *   [1.2 Design Pillars & Player Fantasy](./[1]%20Core%20Vision%20&%20Philosophy/[1.2]%20Design%20Pillars%20&%20Player%20Fantasy.md)
 *   [1.3 Key Inspirations](./[1]%20Core%20Vision%20&%20Philosophy/[1.3]%20Key%20Inspirations.md)
-*   [1.4 Target Audience, Platform, & Funding Strategy](./[1]%20Core%20Vision%20&%20Philosophy/[1.4]%20Target%20Audience,%20Platform,%20&%20Funding%20Strategy.md)
+*   [1.4 Target Audience, Platform, & Funding Strategy](./[1]%20Core%20Vision%20&%20Philosophy/[1.4]%20Target%20Audience,%20Platform,%20%26%20Funding%20Strategy.md)
 
 ### [2] Gameplay Systems & Mechanics
 *This section details the moment-to-moment rules and systems the player interacts with.*
@@ -30,13 +30,13 @@ Welcome to the central design document for Project Chimera (working title `NSFW_
     *   [2.1.3 Post-Run Sequence](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.1]%20The%20Core%20Loop/[2.1.3]%20Post-Run%20Sequence.md)
 *   **[2.2] The Sex Combat**
     *   [2.2.1 Encounter Flow & The 'Escalation State' System](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.1]%20Encounter%20Flow%20&%20The%20'Escalation%20State'%20System.md)
-    *   [2.2.2 Core Resources - 'Tension' & 'Arousal'](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.2]%20Core%20Resources%20-%20'Tension'%20&%20'Arousal'.md)
+    *   [2.2.2 Core Resources - 'Tension' & 'Arousal'](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.2]%20Core%20Resources%20-%20'Tension'%20%26%20'Arousal'.md)
     *   [2.2.3 The Defensive System](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.3]%20The%20Defensive%20System.md)
-    *   [2.2.4 Key States - 'Guarded' & 'Exposed'](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.4]%20Key%20States%20-%20'Guarded'%20&%20'Exposed'.md)
+    *   [2.2.4 Key States - 'Guarded' & 'Exposed'](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.4]%20Key%20States%20-%20'Guarded'%20%26%20'Exposed'.md)
     *   [2.2.5 The 'Positional' System](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.5]%20The%20'Positional'%20System.md)
 *   **[2.3] Player & NPC Systems**
-    *   [2.3.1 Player Systems](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.3]%20Player%20&%20NPC%20Systems/[2.3.1]%20Player%20Systems.md)
-    *   [2.3.2 NPC Design Philosophy](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.3]%20Player%20&%20NPC%20Systems/[2.3.2]%20NPC%20Design%20Philosophy.md)
+    *   [2.3.1 Player Systems](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.3]%20Player%20%26%20NPC%20Systems/[2.3.1]%20Player%20Systems.md)
+    *   [2.3.2 NPC Design Philosophy](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.3]%20Player%20%26%20NPC%20Systems/[2.3.2]%20NPC%20Design%20Philosophy.md)
 *   **[2.4] The Card System**
     *   [2.4.1 Card Design Constitution](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.4]%20The%20Card%20System/[2.4.1]%20Card%20Design%20Constitution.md)
     *   [2.4.2 Card Classifications & Keywords](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.4]%20The%20Card%20System/[2.4.2]%20Card%20Classifications%20&%20Keywords.md)
@@ -44,7 +44,7 @@ Welcome to the central design document for Project Chimera (working title `NSFW_
     *   [2.4.4 Starting Deck - 'The Professional's Primer'](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.4]%20The%20Card%20System/[2.4.4]%20Starting%20Deck%20-%20'The%20Professional's%20Primer'.md)
     *   [2.4.5 Master Card List](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.4]%20The%20Card%20System/[2.4.5]%20Master%20Card%20List.md)
 *   **[2.5] Meta-Progression**
-    *   [2.5.1 Meta-Currencies - 'Refined Data' & 'Sentience Points'](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.5]%20Meta-Progression/[2.5.1]%20Meta-Currencies%20-%20'Refined%20Data'%20&%20'Sentience%20Points'.md)
+    *   [2.5.1 Meta-Currencies - 'Refined Data' & 'Sentience Points'](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.5]%20Meta-Progression/[2.5.1]%20Meta-Currencies%20-%20'Refined%20Data'%20%26%20'Sentience%20Points'.md)
     *   [2.5.2 The 'Mirror Trees' System](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.5]%20Meta-Progression/[2.5.2]%20The%20'Mirror%20Trees'%20System.md)
     *   [2.5.3 The 'Hybrid Commitment' Model](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.5]%20Meta-Progression/[2.5.3]%20The%20'Hybrid%20Commitment'%20Model.md)
     *   [2.5.4 Player Loadouts - The 'Chassis' System](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.5]%20Meta-Progression/[2.5.4]%20Player%20Loadouts%20-%20The%20'Chassis'%20System.md)
