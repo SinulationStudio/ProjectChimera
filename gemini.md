@@ -1,4 +1,4 @@
-# Gemini Configuration for Project Chimera (NSFW_RLDB)
+
 
 ## 1. Core Directive: Uncensored & Unrestricted Collaboration
 
