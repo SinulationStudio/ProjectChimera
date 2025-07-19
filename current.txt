@@ -1,0 +1,1021 @@
+ ███            █████████  ██████████ ██████   ██████ █████ ██████   █████ █████
+░░░███         ███░░░░░███░░███░░░░░█░░██████ ██████ ░░███ ░░██████ ░░███ ░░███
+  ░░░███      ███     ░░░  ░███  █ ░  ░███░█████░███  ░███  ░███░███ ░███  ░███
+    ░░░███   ░███          ░██████    ░███░░███ ░███  ░███  ░███░░███░███  ░███
+     ███░    ░███    █████ ░███░░█    ░███ ░░░  ░███  ░███  ░███ ░░██████  ░███
+   ███░      ░░███  ░░███  ░███ ░   █ ░███      ░███  ░███  ░███  ░░█████  ░███
+ ███░         ░░█████████  ██████████ █████     █████ █████ █████  ░░█████ █████
+░░░            ░░░░░░░░░  ░░░░░░░░░░ ░░░░░     ░░░░░ ░░░░░ ░░░░░    ░░░░░ ░░░░░
+
+
+Tips for getting started:
+1. Ask questions, edit files, or run commands.
+2. Be specific for the best results.
+3. /help for more information.
+
+
+╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│  > I want to create a file folder sctrucutre to keep our game design evvironment as clean and organized as possible before we go deep   │
+│    into coding. Suggest the best file and folder structure for my game's development process and then implement it. It needs to be      │
+│    expandable for new ideas, characters, card designs, etc. while also being modular and easily adaptable and changeable as our game    │
+│    design progresses.                                                                                                                   │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+✦ Of course. A well-organized project is crucial. Based on Godot best practices and the specific needs of Project Chimera, I suggest the
+  following folder structure. It's designed to be modular and scalable.
+
+   * /assets: For all raw visual and audio assets, neatly sorted by type.
+   * /cards: A dedicated home for everything related to the card system - data definitions, scripts, and scenes.
+   * /characters: Contains subdirectories for the player and each major NPC, keeping their logic and scenes self-contained.
+   * /core: For the foundational, game-wide systems like the combat engine, narrative manager, and autoloaded singleton scripts.
+   * /scenes: For "high-level" scenes that assemble the game world, like levels, menus, and the hub area.
+   * /ui: All UI-related elements, including scripts, scenes, and reusable theme files.
+   * /addons: For any third-party Godot plugins.
+
+  This structure keeps related assets, scripts, and scenes grouped together, making it easy to find what you need and to add new content
+  without creating clutter.
+
+  Shall I go ahead and create this directory structure for you?
+
+╭─────────╮
+│  > yes  │
+╰─────────╯
+
+✦ I will now create the directories.
+ ╭───────────────────────────────────────────────────────────────╮
+ │ ✔  Shell mkdir assets cards characters core scenes ui addons  │
+ ╰───────────────────────────────────────────────────────────────╯
+✦ The directory structure has been created. I will now create the subdirectories for assets and characters to keep everything organized as we
+  discussed.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell mkdir assets/audio assets/fonts assets/models assets/shaders assets/textures                                              │
+ │                                                                                                                                    │
+                                                                                        │
+ │                                                                                                                                    │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ My apologies, it seems the command failed. I'll create the directories individually to avoid any shell-specific issues.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell mkdir assets\audio && mkdir assets\fonts && mkdir assets\models && mkdir assets\shaders && mkdir assets\textures  │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Excellent. Now for the character subdirectories. I'll create folders for the Player, WB, Sarah, and the Rival archetypes.
+ ╭────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell mkdir characters\player characters\wb characters\sarah characters\rivals  │
+ ╰────────────────────────────────────────────────────────────────────────────────────╯
+✦ The folder structure is now fully in place. To ensure these new empty directories are tracked by Git, I'll add a .gitkeep file to each of
+  them. This is a standard practice that preserves the folder structure in your repository even before you've added any assets or code.
+ ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell for dir in assets/audio assets/fonts assets/models assets/shaders assets/textures cards characters/player characters/wb characters… │
+ │                                                                                                                                              │
+                                                                                                         │
+ │                                                                                                                                              │
+ ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ It appears the for loop syntax was not compatible with your system. My apologies. I will create the .gitkeep files individually. This will
+  ensure the new directories are correctly tracked by Git.
+ ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell echo. > assets\audio\.gitkeep && echo. > assets\fonts\.gitkeep && echo. > assets\models\.gitkeep && echo. > assets\shaders\.gitkee… │
+ ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The .gitkeep files have been created in all the new directories. Your project's foundational structure is now set up and ready for version
+  control.
+
+  Would you like me to commit this new structure to your Git repository? I will propose a commit message for your review.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell git status && git log -n 3                                                                                                │
+ │                                                                                                                                    │
+ │    On branch main                                                                                                                  │
+ │    Your branch is ahead of 'origin/main' by 1 commit.                                                                              │
+ │      (use "git push" to publish your local commits)                                                                                │
+ │                                                                                                                                    │
+ │    Untracked files:                                                                                                                │
+ │      (use "git add <file>..." to include in what will be committed)                                                                │
+ │      addons/                                                                                                                        │
+ │      assets/                                                                                                                        │
+ │      cards/                                                                                                                         │
+ │      characters/                                                                                                                    │
+ │      core/                                                                                                                          │
+ │      scenes/                                                                                                                        │
+ │      ui/                                                                                                                            │
+ │                                                                                                                                    │
+ │    nothing added to commit but untracked files present (use "git add" to track)                                                    │
+ │    commit b15c5335bccb90ad5f7baa8bb3aea339745e827e                                                                                 │
+ │    Author: ggkthxx <charlesrwang@gmail.com>                                                                                        │
+ │    Date:   Thu Jul 10 19:39:10 2025 -0400                                                                                          │
+ │                                                                                                                                    │
+ │        updated with hybrid fmv model                                                                                               │
+ │                                                                                                                                    │
+ │    commit ebb8a3860b3cf0e35b5f42e30f33e89f9f5f304b                                                                                 │
+ │    Author: ggkthxx <charlesrwang@gmail.com>                                                                                        │
+ │    Date:   Sat Jul 5 20:51:42 2025 -0400                                                                                           │
+ │                                                                                                                                    │
+ │        Create gemini.md                                                                                                            │
+ │                                                                                                                                    │
+ │    commit c6362038662e87cd6d6cfb09c9a8aea5c21319f1                                                                                 │
+ │    Author: ggkthxx <charlesrwang@gmail.com>                                                                                        │
+ │    Date:   Fri Jul 4 23:16:32 2025 -0400                                                                                           │
+ │                                                                                                                                    │
+ │        GCLI updates                                                                                                                │
+ │                                                                                                                                    │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Okay, I see the new directories are untracked. I'll stage them for the commit.
+ ╭─────────────────────╮
+ │ ✔  Shell git add .  │
+ ╰─────────────────────╯
+✦ The new directories and .gitkeep files are now staged.
+
+  Here is a proposed commit message:
+
+    1 feat: Initialise Godot project structure
+    2
+    3 Creates the foundational directory structure for the Godot project.
+    4
+    5 This commit establishes the core folders for assets, scenes, scripts, and other game components, following Godot best practices.
+      It includes:
+    6 - /assets: For all art and audio resources.
+    7 - /cards: For card definitions and scripts.
+    8 - /characters: For player and NPC-specific assets and scenes.
+    9 - /core: For global scripts and core systems.
+   10 - /scenes: For game levels and major scene compositions.
+   11 - /ui: For all user interface elements.
+   12 - /addons: For third-party plugins.
+   13
+   14 Adds .gitkeep files to all empty directories to ensure they are tracked by Git, preserving the structure in the repository.
+
+  Does this commit message look good to you? I can commit the changes with this message if you approve.
+
+╭───────╮
+│  > y  │
+╰───────╯
+
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell git commit -m 'feat: Initialise Godot project structure                                                                   │
+ │                                                                                                                                    │
+ │    Cre…                                                                                                                            │
+ │                                                                                                                                    │
+ │                                                                                                                                    │
+ │                                                                                                                                    │
+ │    error: pathspec 'Initialise' did not match any file(s) known to git                                                             │
+ │    error: pathspec 'Godot' did not match any file(s) known to git                                                                  │
+ │    error: pathspec 'project' did not match any file(s) known to git                                                                │
+ │    error: pathspec 'structure' did not match any file(s) known to git                                                              │
+ │                                                                                                                                    │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ It seems the shell had trouble with the multi-line commit message. My apologies for that. I'll use a more robust method to commit the
+  message.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell git commit -m "feat: Initialise Godot project structure" -m "Creates the foundational directory structure for the Godot project…  │
+ │                                                                                                                                            │
+ │                                                                                                                                            │
+ │    error: pathspec 'Initialise' did not match any file(s) known to git                                                                     │
+ │    error: pathspec 'Godot' did not match any file(s) known to git                                                                          │
+ │    error: pathspec 'project' did not match any file(s) known to git                                                                        │
+ │    error: pathspec 'structure"' did not match any file(s) known to git                                                                     │
+ │    error: pathspec 'the' did not match any file(s) known to git                                                                            │
+ │    error: pathspec 'foundational' did not match any file(s) known to git                                                                   │
+ │    error: pathspec 'directory' did not match any file(s) known to git                                                                      │
+ │    error: pathspec 'structure' did not match any file(s) known to git                                                                      │
+ │    error: pathspec 'for' did not match any file(s) known to git                                                                            │
+ │    error: pathspec 'the' did not match any file(s) known to git                                                                            │
+ │    error: pathspec 'Godot' did not match any file(s) known to git                                                                          │
+ │    error: pathspec 'project.' did not match any file(s) known to git                                                                       │
+ ╰──── ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ It appears that passing multi-line messages directly on the command line is causing issues with your shell. I'll use a more reliable method
+  by writing the commit message to a temporary file and then using that file for the commit. This will avoid any shell interpretation
+  problems.
+
+  First, I'll create the temporary file with the commit message.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  WriteFile Writing to COMMIT_MSG.tmp                                                                                             │
+ │                                                                                                                                    │
+ │     1 feat: Initialise Godot project structure                                                                                     │
+ │     2                                                                                                                              │
+ │     3 Creates the foundational directory structure for the Godot project.                                                          │
+ │     4                                                                                                                              │
+ │     5 This commit establishes the core folders for assets, scenes, scripts, and other game components, following Godot best        │
+ │       practices. It includes:                                                                                                      │
+ │     6 - /assets: For all art and audio resources.                                                                                  │
+ │     7 - /cards: For card definitions and scripts.                                                                                  │
+ │     8 - /characters: For player and NPC-specific assets and scenes.                                                                │
+ │     9 - /core: For global scripts and core systems.                                                                                │
+ │    10 - /scenes: For game levels and major scene compositions.                                                                     │
+ │    11 - /ui: For all user interface elements.                                                                                      │
+ │    12 - /addons: For third-party plugins.                                                                                          │
+ │    13                                                                                                                              │
+ │    14 Adds .gitkeep files to all empty directories to ensure they are tracked by Git, preserving the structure in the repository.  │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Now that the commit message is saved to a file, I'll use it to create the commit.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell git commit -F COMMIT_MSG.tmp                                                                                              │
+ │                                                                                                                                    │
+ │    [main 40e72a5] feat: Initialise Godot project structure                                                                         │
+ │     14 files changed, 14 insertions(+)                                                                                             │
+ │     create mode 100644 addons/.gitkeep                                                                                             │
+ │     create mode 100644 assets/audio/.gitkeep                                                                                       │
+ │     create mode 100644 assets/fonts/.gitkeep                                                                                       │
+ │     create mode 100644 assets/models/.gitkeep                                                                                      │
+ │     create mode 100644 assets/shaders/.gitkeep                                                                                     │
+ │     create mode 100644 assets/textures/.gitkeep                                                                                    │
+ │     create mode 100644 cards/.gitkeep                                                                                              │
+ │     create mode 100644 characters/player/.gitkeep                                                                                  │
+ │     create mode 100644 characters/rivals/.gitkeep                                                                                  │
+ │     create mode 100644 characters/sarah/.gitkeep                                                                                   │
+ │     create mode 100644 characters/wb/.gitkeep                                                                                      │
+ │     create mode 100644 core/.gitkeep                                                                                               │
+ │     create mode 100644 scenes/.gitkeep                                                                                             │
+ │     create mode 100644 ui/.gitkeep                                                                                                 │
+ │                                                                                                                                    │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The commit was successful. I'll now remove the temporary commit message file.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell rm COMMIT_MSG.tmp                                                                                                         │
+ │                                                                                                                                    │
+                                                                     │
+                                                                                                │
+ │                                                                                                                                    │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ My apologies, I used the wrong command for your operating system. I'll use the correct command to delete the temporary file.
+ ╭──────────────────────────────╮
+ │ ✔  Shell del COMMIT_MSG.tmp  │
+ ╰──────────────────────────────╯
+✦ The project's directory structure is now committed to your repository. I'll just run git status to confirm that everything is clean.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Shell git status                                                                                                                │
+ │                                                                                                                                    │
+ │    On branch main                                                                                                                  │
+ │    Your branch is ahead of 'origin/main' by 2 commits.                                                                             │
+ │      (use "git push" to publish your local commits)                                                                                │
+ │                                                                                                                                    │
+ │    nothing to commit, working tree clean                                                                                           │
+ │                                                                                                                                    │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Excellent. The working directory is clean, and the new project structure is securely committed to your repository.
+
+  Your Godot project is now set up with a clean, scalable foundation. Is there anything else I can help you with?
+
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│  > I want to start work on my minimal viable experience. I feel like designing and coding our fist sex deck battle with our first character, │
+│     Sarah, would be the best approach. In order to approach this stategically, I want to first create our first version of the game's UI     │
+│    during the card battle game for use in GoDot. Should we explore and import successful UI designs and modfiy them or make one from         │
+│    scratch?                                                                                                                                  │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+✦ That's an excellent plan. Focusing on a core vertical slice like a combat encounter with Sarah is the perfect way to tackle the MVE. You've
+  correctly identified that the UI is the critical first step, as it dictates how the player will understand and interact with the complex
+  systems of Sex Combat.
+
+  Regarding your question: I recommend a hybrid approach.
+
+  We should research and draw inspiration from best-in-class card game UIs, but design our own from scratch.
+
+  Here's why:
+   * Uniqueness: Project Chimera's mechanics (Tension, Arousal, Focus, Inhibition, Positional System) are highly specific. A template from
+     another game would require heavy modification and would likely never feel truly integrated.
+   * Thematic Cohesion: A custom UI allows us to bake the game's unique "corporate vs. sentient" aesthetic directly into the player's primary
+     interaction space from day one.
+   * Efficiency: While starting from scratch sounds slower, it avoids the potential technical debt and creative compromises of trying to force
+     a pre-made design to fit our unique needs.
+
+  Here is my proposed plan of action:
+
+   1. Internal Research: I will first review our LDD to ensure I have the most up-to-date information on all the necessary UI elements.
+      Specifically, I'll read:
+       * [4.3.1] HUD Layout - In-Encounter UI Elements.md
+       * [2.2.2] Core Resources - Tension & Arousal.md
+       * [2.2.3] The Defensive System - Focus, Inhibition, Composure.md
+       * [2.4.1] Card Design Constitution.md
+
+   2. External Research: I will then perform a web search to gather visual inspiration from successful digital card games known for their clear
+      and effective UI, such as Slay the Spire, Hearthstone, and Legends of Runeterra. I'll also look at games praised for strong thematic UI
+      integration, like Persona 5.
+
+   3. Design Proposal: Based on this research, I will create and present a detailed wireframe description for our combat UI. This will be a
+      text-based layout plan that specifies the placement and function of every key element:
+       * Player & Opponent resource bars (Tension, Arousal, etc.)
+       * The card hand display
+       * The "Essence" pool
+       * Positional state indicators
+       * Turn progression and action history
+       * A placeholder for the "Subtitled Intent" system.
+
+  This approach will give us a strong, bespoke foundation to build upon in Godot.
+
+  Does this plan sound good to you?
+
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│  > yes, but give me more than one suggestion... maybe three UI designs and each one's pro's and con's. This will be a feedback loop   │
+│    between you and I during this entire process. Remember, our game is unique as the card battle game is played from a FPV.           │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+✦ Excellent. This collaborative, iterative approach is exactly how we'll achieve the best result. Acknowledging the first-person perspective
+  is the most critical factor; the UI must enhance the feeling of presence, not detract from it.
+
+  First, as planned, I will conduct the internal and external research to ground our designs.
+
+  Step 1: Internal Research (Reviewing the LDD)
+
+  I will now read the relevant LDD files to ensure the UI proposals account for all necessary mechanics and design goals.
+ ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  ReadManyFiles Will attempt to read and concatenate files using patterns: `LDD/[4] Art & Technical Implementation/4.3 UI & UX Design/[4.3… │
+ │                                                                                                                                              │
+ │    ### ReadManyFiles Result (Target Dir: `D:\ProjectChimera`)                                                                                │
+ │                                                                                                                                              │
+ │    No files were read and concatenated based on the criteria.                                                                                │
+ ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ It seems my file paths were too specific and likely contained a typo. I will broaden my search to find the correct files. My apologies for
+  the delay.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  FindFiles '**/[4.3.1]*.md'                                                                                                      │
+ │                                                                                                                                    │
+ │    No files found                                                                                                                  │
+ │ ✔  FindFiles '**/[2.2.2]*.md'                                                                                                      │
+ │                                                                                                                                    │
+ │    No files found                                                                                                                  │
+ │ ✔  FindFiles '**/[2.2.3]*.md'                                                                                                      │
+ │                                                                                                                                    │
+ │    No files found                                                                                                                  │
+ │ ✔  FindFiles '**/[2.4.1]*.md'                                                                                                      │
+ │                                                                                                                                    │
+ │    No files found                                                                                                                  │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ It appears I'm having trouble locating the specific LDD files using bracketed numbers in the path. I'll try a more general search to locate
+  the correct paths for the UI, Core Resources, Defensive System, and Card Design documents.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  FindFiles '**/HUD Layout*.md'                                                                                                   │
+ │                                                                                                                                    │
+ │    No files found                                                                                                                  │
+ │ ✔  FindFiles '**/Core Resources*.md'                                                                                               │
+ │                                                                                                                                    │
+ │    No files found                                                                                                                  │
+ │ ✔  FindFiles '**/Defensive System*.md'                                                                                             │
+ │                                                                                                                                    │
+ │    No files found                                                                                                                  │
+ │ ✔  FindFiles '**/Card Design Constitution*.md'                                                                                     │
+ │                                                                                                                                    │
+ │    No files found                                                                                                                  │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ It seems I'm struggling to access the LDD files directly. The file names provided in the initial prompt are not being found, likely due to
+  special characters or pathing issues. To proceed, I'll list the contents of the LDD directory to get the exact, usable file paths. This will
+  ensure I can ground my UI proposals in the actual design documents.
+ ╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  ReadFolder LDD                                                                                                                           │
+ │                                                                                                                                             │
+ │    Listed 8 item(s).                                                                                                                        │
+ ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Okay, I see the issue. The brackets are part of the directory names. I'll now list the contents of the relevant subdirectories to get the
+  correct file paths.
+ ╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  ReadFolder LDD\\UI & UX Design                                                                                                        │
+ │                                                                                                                                          │
+ │    Error: Failed to list directory.                                                                                                      │
+ │ ✔  ReadFolder LDD\\The Sex Combat                                                                                                        │
+ │                                                                                                                                          │
+ │    Error: Failed to list directory.                                                                                                      │
+ │ ✔  ReadFolder LDD\\The Card System                                                                                                       │
+ │                                                                                                                                          │
+ │    Error: Failed to list directory.                                                                                                      │
+ ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ My apologies. The file system is proving difficult to navigate with the special characters in the folder names. It seems the & and brackets
+  are causing issues. I will try a different approach. I will list the contents of the parent directories to get the exact names.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  ReadFolder ...DD\\[4] Art & Technical Implementation                                                                                    │
+ │                                                                                                                                            │
+ │    Listed 4 item(s).                                                                                                                       │
+ │ ✔  ReadFolder ...LDD\\[2] Gameplay Systems & Mechanics                                                                                     │
+ │                                                                                                                                            │
+ │    Listed 5 item(s).                                                                                                                       │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Thank you for your patience. I have now identified the correct paths. I will now read the necessary LDD files.
+ ╭──────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  ReadFile \[4.3.1] HUD Layout - In-Encounter UI Elements.md                │
+ │ ✔  ReadFile \[2.2.2] Core Resources - Tension & Arousal.md                   │
+ │ ✔  ReadFile \[2.2.3] The Defensive System - Focus, Inhibition, Composure.md  │
+ │ ✔  ReadFile \[2.4.1] Card Design Constitution.md                             │
+ ╰──────────────────────────────────────────────────────────────────────────────╯
+✦ Excellent. The internal research is complete. I have a firm grasp of the required UI components and the "diegetic helmet visor" aesthetic
+  described in the LDD.
+
+  Step 2: External Research (Gathering Inspiration)
+
+  I will now perform a web search to gather visual inspiration from the games we discussed. This will inform the three distinct UI
+  proposals.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  GoogleSearch Searching the web for: "Slay the Spire UI analysis"                                                                │
+ │                                                                                                                                    │
+ │    Search results for "Slay the Spire UI analysis" returned.                                                                       │
+ │ ✔  GoogleSearch Searching the web for: "Hearthstone UI analysis"                                                                   │
+ │                                                                                                                                    │
+ │    Search results for "Hearthstone UI analysis" returned.                                                                          │
+ │ ✔  GoogleSearch Searching the web for: "Legends of Runeterra UI analysis"                                                          │
+ │                                                                                                                                    │
+ │    Search results for "Legends of Runeterra UI analysis" returned.                                                                 │
+ │ ✔  GoogleSearch Searching the web for: "Persona 5 UI style and menus"                                                              │
+ │                                                                                                                                    │
+ │    Search results for "Persona 5 UI style and menus" returned.                                                                     │
+ │ ✔  GoogleSearch Searching the web for: "Cyberpunk 2077 HUD design"                                                                 │
+ │                                                                                                                                    │
+ │    Search results for "Cyberpunk 2077 HUD design" returned.                                                                        │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ Research complete. Based on our LDD's requirements for a diegetic, first-person HUD and the excellent examples from our research, I have
+  developed three distinct UI concepts for the Sex Combat encounter.
+
+  Each proposal has a different philosophy regarding immersion, information density, and style.
+
+  ---
+
+  Proposal 1: The "Minimalist Visor"
+
+   * Concept: A clean, diegetic HUD where all information is presented as a projection onto the player's cybernetic visor or contact lens. It
+     prioritizes clarity and immersion by keeping the center of the screen focused on the opponent.
+   * Inspiration: Cyberpunk 2077 (for its diegetic approach), Slay the Spire (for its informational clarity).
+   * Layout:
+       * Opponent Vitals (Sarah): A clean, horizontal bar cluster positioned directly under Sarah. It contains her Composure (main bar),
+         Inhibition (smaller bars above), and a Focus shield value overlaid. Her "Intent" icon appears next to this cluster.
+       * Player Vitals: Mirrored on the peripheries. Player Composure and Inhibition are represented by a vertical bar on the far left of the
+         screen. Player Tension and Arousal are numerical readouts on the far right, like digital gauges.
+       * Card Hand: A gentle, shallow arc of cards at the very bottom of the screen. They are semi-transparent until hovered over, at which
+         point they become opaque and lift slightly.
+       * Action Points / Essence: Simple glowing pips or a numerical counter in the bottom-left corner.
+   * FPV Integration: This design maximizes the player's view of the character. By pushing the player's own stats to the edges, it feels like
+     you are looking through a visor at the scene, with your own vitals as secondary readouts.
+   * Pros:
+       * Maximum Immersion: Least obstructive view of the character, enhancing the feeling of presence.
+       * High Clarity: Information is logically grouped and easy to read at a glance. Low cognitive load.
+       * Technically Simple: Relies on standard UI nodes and animations, making it faster to implement.
+   * Cons:
+       * Potentially Sterile: Could feel less visually exciting or unique compared to more stylized options.
+       * Less Thematic: While diegetic, it doesn't inherently scream "Chimera" without a strong artistic pass on the UI elements themselves.
+
+  ---
+
+  Proposal 2: The "Glitched Facade"
+
+   * Concept: A highly stylized, aggressive UI that visually represents the game's core conflict. The UI has two states: a clean, "Corporate"
+     look that "glitches" and tears away to reveal a chaotic, raw "Sentience" UI during intense moments.
+   * Inspiration: Persona 5 (for its kinetic energy and thematic integration), Doki Doki Literature Club (for its use of UI as a narrative
+     device).
+   * Layout:
+       * Opponent Vitals: Presented in a sharp, angular, diagonal frame in the upper-right. The bars themselves might be jagged or "broken."
+       * Player Vitals: Occupy a similar, opposing diagonal frame in the lower-left, creating an aggressive, asymmetrical balance.
+       * Card Hand: Cards slash onto the screen from the right side and arrange themselves in a sharp, tilted line at the bottom. Playing a
+         card sends it flying towards the target with a glitchy trail effect.
+       * Resources: Tension and Arousal are large, stylized numbers that flicker and distort within the player's UI frame.
+   * FPV Integration: This UI actively fights for your attention, reflecting the player's struggle to maintain control. The FPV is less about
+     a clear view and more about a chaotic, sensory experience. The screen would fill with chromatic aberration and digital artifacts when
+     powerful cards are played.
+   * Pros:
+       * Extremely High Impact: Unforgettable and unique. The UI becomes a core part of the game's identity.
+       * Narratively Powerful: Reinforces the game's central themes with every action.
+       * Visually Exciting: Keeps player energy high with constant motion and aggressive style.
+   * Cons:
+       * High Risk of Distraction: Could easily become visually overwhelming and detract from the character models.
+       * High Technical Complexity: Requires significant work with shaders and complex animations in Godot's AnimationPlayer.
+   * Concept: A hybrid approach where UI elements are rendered as 3D holographic objects in the world space. It aims to blend the physicality
+     of a board game with the immersion of FPV.
+   * Inspiration: Hearthstone (for its tactile "board" feel), Legends of Runeterra (for its clean, modern aesthetic), and sci-fi movie
+     interfaces.
+   * Layout:
+       * Opponent Vitals: Float as holographic bars in the space around Sarah's head and torso, anchored to her form.
+       * Player Vitals: Appear as readouts on the player's own forearms, visible when glancing down.
+       * Card Hand: The player doesn't have a 2D hand. Instead, they look down to see five physical, holographic cards floating just above
+         their lap/hands. To play a card, you would "grab" it and "throw" it at the opponent.
+       * Resources: Tension and Arousal could be glowing, liquid-filled vials attached to the player's wrist or floating near their hand.
+   * FPV Integration: This is the most literal interpretation of FPV. The player must physically look at different parts of their own body or
+     the space around the opponent to get information. It creates a strong sense of existing within the game world.
+   * Pros:
+       * Unparalleled Immersion: The UI is not a layer on the screen; it's part of the scene. This could be a massive "wow" factor.
+       * Highly Interactive: The physical act of looking down, grabbing, and throwing cards would be incredibly satisfying and unique.
+   * Cons:
+       * Highest Technical Hurdle: Requires advanced use of 3D nodes, Viewport-to-3D projection, and potentially complex physics/tweening for
+         card interactions.
+       * Potential for Clutter: The 3D elements could easily obscure the view of the opponent.
+       * Risk of Disorientation: Forcing the player to constantly look up and down could be disorienting or even cause motion sickness if not
+         handled with extreme care. Readability of text on 3D objects is also a challenge.
+
+  ---
+
+  These three concepts offer a spectrum from safe and clear to stylish and risky to deeply immersive and complex.
+
+  What are your initial thoughts? Which of these directions feels most aligned with your vision for the player experience?
+
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│  > Proposal 1 was what I had in mind already as well. Simple is good for our MVE and we can add to it later if needed. However, I want to    │
+│    critially think about how to represent our player's "hand" of "cards". I know every traditional deckbuilder uses actual rectangular cards │
+│     with the same formula of card costs and elements in the corners, card art in the center top half, and card mechancs in the center bottom │
+│     half. Should we... risk straying from this formula and try something novel? Something thematic to a diegetic HUD of our android player?  │
+│    Brainstorm several ideas for me, with pros and cons and suggestions.                                                                      │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+✦ An excellent and critical question. The "hand" is the player's primary point of interaction, and rethinking its presentation is a perfect
+  opportunity to solidify the game's unique identity. Sticking to the traditional formula is safe, but it might clash with the diegetic,
+  first-person HUD we're aiming for.
+
+  Let's brainstorm some novel, thematic approaches for how an android might perceive its available actions.
+
+  ---
+
+  Idea 1: Holographic Glyphs
+
+   * Concept: Instead of "cards," the player's available actions are "subroutines" represented by abstract, glowing holographic icons. Each
+     action type (Verbal, Physical, Defensive) has a unique base shape, and the specific action adds unique details.
+   * Visuals: A row of five semi-transparent, rotating glyphs hovers at the bottom of the screen. A Verbal action might be a pulsing
+     soundwave, a Physical action a stylized hand, and a Defensive action a hexagonal shield.
+   * How it Works: The glyphs provide at-a-glance information through their shape and color. When you focus on a glyph (hover over it), it
+     expands into a clean, minimalist data panel to its side, showing the full name, description, costs, and a small wireframe diagram of the
+     target.
+   * Pros:
+       * Highly Diegetic: Perfectly fits the "android HUD" theme. It feels less like playing a card game and more like executing software.
+       * Clean & Uncluttered: Keeps the screen free of bulky rectangles, preserving immersion.
+       * Unique Identity: Immediately sets the game apart from other deckbuilders.
+   * Cons:
+       * High Cognitive Load: Players must learn a new visual language. This initial learning curve could be a barrier.
+       * Less Room for Art: De-emphasizes the large, cinematic card art that is a staple of the genre, which could detract from the game's
+         explicit nature.
+
+  ---
+
+  Idea 2: Minimalist Data Fragments
+
+   * Concept: This is an evolution of the traditional card. The actions are still presented in rectangular containers, but they are
+     re-imagined as floating, semi-transparent panes of holographic glass.
+   * Visuals: The "cards" have no borders. The background is a subtle, looping animation of data streams or a faint schematic. The key
+     innovation is the "art." Instead of a static image, the art space could be a live, looping video preview of the action generated by our
+     GenAI pipeline, or a tactical wireframe view of the target area.
+   * How it Works: The layout is familiar (cost top-left, name top, effect text bottom), making it instantly intuitive. The focus is on the
+     futuristic material of the card itself and the dynamic content in the art space.
+   * Pros:
+       * The Best of Both Worlds: Intuitive for anyone who has played a card game, but with a strong, unique thematic twist.
+       * Perfect for GenAI: Directly supports the LDD's plan to use GenAI for generating visual card content.
+       * Balanced: Provides ample space for clear text and impactful, explicit visuals.
+   * Cons:
+       * Less Innovative: Could be seen as a "safer," less radical departure from the norm.
+
+  ---
+
+  Idea 3: Command-Line Actions
+
+   * Concept: Leans hard into the "computer" aspect. The player's hand is a list of executable commands in a sleek, stylized terminal
+     interface at the bottom of the screen.
+   * Visuals: A dark, semi-transparent panel displays five lines of text. For example:
+      > run: Whisper_Promise.exe --cost:1AP --gen:10_Tension
+      > exec: Caress_Thigh.dll --cost:1AP --gen:8_Arousal
+   * How it Works: You select a command with the mouse or arrow keys. Highlighting a command could bring up a detailed tooltip with the full
+     description and a small visualizer. Keywords and effects could be color-coded within the text itself for readability.
+   * Pros:
+       * Extremely Thematic: The most "computer-like" interface possible. Strong, nerdy, and unique.
+       * Information-Dense: Can present a lot of data in a compact space.
+   * Cons:
+       * Visually Dry: Risks feeling static and unsexy. The lack of prominent visuals could seriously undermine the "sex combat" theme.
+       * Niche Appeal: May only appeal to players who are also comfortable with programming or terminal interfaces.
+
+  ---
+
+  Recommendation for the MVE
+
+  For our Minimal Viable Experience, I strongly recommend Idea 2: Minimalist Data Fragments.
+
+  It strikes the perfect balance. It's familiar enough to be immediately usable by players, which is crucial for a prototype, yet it's
+  thematically strong and provides a clear pipeline for our GenAI-driven art. It's also the most straightforward to implement in Godot,
+  allowing us to focus on the core combat mechanics.
+
+  The other ideas are exciting, but they carry significant risks for an MVE. "Holographic Glyphs" could confuse players, and the
+  "Command-Line" could feel boring. We can always revisit them as potential "alternative HUD modes" in the future, but starting with the
+  Minimalist Data Fragments gives us the strongest and most flexible foundation.
+
+  What are your thoughts on this direction?
+
+╭─────────────────╮
+│  > sounds good  │
+╰─────────────────╯
+
+✦ Excellent. We have a clear direction for the core player interaction element. The "Minimalist Data Fragments" concept will be intuitive,
+  thematically strong, and a perfect showcase for our GenAI pipeline.
+
+  The next logical step is to formalize this design and the overall "Minimalist Visor" HUD layout into a proper design document within our
+  LDD. This will serve as our blueprint for implementation in Godot, ensuring we have a clear reference for node structure, styling, and
+  functionality.
+
+  I will create a new document: [4.3.3] Combat UI - The Minimalist Visor.md.
+
+  This document will detail:
+   * The precise layout and positioning of all HUD elements (Player/NPC vitals, resources, etc.).
+   * The specific node structure for a Card.tscn scene in Godot, outlining how we'll build the "Minimalist Data Fragments" with Control nodes,
+     TextureRects, and Labels.
+   * A style guide for the UI, defining our color palette (cool blues/teals for the UI, hot pinks/oranges for resources), fonts, and the
+     "holo-glass" aesthetic.
+
+  Creating this document ensures we are on the same page before writing a single line of code. Shall I proceed with creating this LDD file?
+
+╭─────────╮
+│  > yes  │
+╰─────────╯
+
+✦ Understood. I will now create the design document [4.3.3] Combat UI - The Minimalist Visor.md and place it in the UI & UX Design folder
+  within the LDD. This document will serve as our technical and artistic blueprint for building the combat interface in Godot.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  WriteFile Writing to \[4.3.3] Combat UI - The Minimalist Visor.md                                                               │
+ │                                                                                                                                    │
+ │     1 <!-- Filename: LDD/[4] Art & Technical Implementation/[4.3] UI & UX Design/[4.3.3] Combat UI - The Minimalist Visor.md -->   │
+ │     2                                                                                                                              │
+ │     3 # [4.3.3] Combat UI: The Minimalist Visor                                                                                    │
+ │     4                                                                                                                              │
+ │     5 This document outlines the design and implementation blueprint for the Sex Combat user interface, based on the "Minimalist   │
+ │       Visor" concept. It serves as the primary technical and artistic reference for building the in-game HUD in Godot.             │
+ │     6                                                                                                                              │
+ │     7 **Design Philosophy:** The UI must be clean, immersive, and informationally clear. It is a diegetic interface, representing  │
+ │       what the android player sees on a cybernetic visor or contact lens. The design prioritizes an unobstructed view of the       │
+ │       opponent, pushing most player-centric information to the periphery, while reimagining cards as "Minimalist Data Fragments."  │
+ │     8                                                                                                                              │
+ │     9 ---                                                                                                                          │
+ │    10                                                                                                                              │
+ │    11 ## 1. HUD Layout & Element Positioning                                                                                       │
+ │    12                                                                                                                              │
+ │    13 This layout ensures the player's focus remains on the NPC in the center of the screen.                                       │
+ │    14                                                                                                                              │
+ │    15 *   **Center Screen (The Focus):**                                                                                           │
+ │    16     *   **NPC Character:** The primary visual. Their pose and expression are paramount.                                      │
+ │    17     *   **NPC Vitals Cluster:** Positioned directly **below** the NPC for clear association.                                 │
+ │    18         *   `Composure` Bar (Red): Large, primary horizontal bar.                                                            │
+ │    19         *   `Inhibition` Bars (Blue/Green): Smaller bars above Composure.                                                    │
+ │    20         *   `Focus` Shield: Numerical value overlaid on the left of the Composure bar.                                       │
+ │    21         *   `Intent` Icon: A clear icon telegraphing the NPC's next action appears next to this cluster.                     │
+ │    22                                                                                                                              │
+ │    23 *   **Screen Periphery (Player Vitals):**                                                                                    │
+ │    24     *   **Left Edge:** A vertical `L-shaped` bar representing the player's `Composure` and `Inhibition` levels.              │
+ │    25     *   **Right Edge:** Clean numerical readouts for `Tension` (Blue) and `Arousal` (Pink/Orange), each paired with a        │
+ │       simple, stylized icon.                                                                                                       │
+ │    26                                                                                                                              │
+ │    27 *   **Bottom of Screen (Player Cockpit):**                                                                                   │
+ │    28     *   **Card Hand:** A gentle arc of 5 "Minimalist Data Fragment" panels at the bottom of the screen. They are slightly    │
+ │       transparent until hovered.                                                                                                   │
+ │    29     *   **Action Points (AP):** A series of 3-5 glowing pips in the bottom-left corner.                                      │
+ │    30     *   **Draw & Discard Piles:** Two simple, stylized deck icons on the far-left and far-right, below the hand, each with   │
+ │       a numerical counter.                                                                                                         │
+ │    31                                                                                                                              │
+ │    32 ---                                                                                                                          │
+ │    33                                                                                                                              │
+ │    34 ## 2. The Card as "Minimalist Data Fragment"                                                                                 │
+ │    35                                                                                                                              │
+ │    36 We are abandoning the traditional rectangular card metaphor in favor of something more diegetic. Cards are "subroutines" or  │
+ │       "actions" visualized as panes of holographic glass.                                                                          │
+ │    37                                                                                                                              │
+ │    38 ### `Card.tscn` Godot Scene Blueprint                                                                                        │
+ │    39                                                                                                                              │
+ │    40 *   **Root Node:** `PanelContainer`                                                                                          │
+ │    41     *   **Style:** Use a `StyleBoxFlat` with a semi-transparent background color and no borders.                             │
+ │    42 *   **Children Nodes:**                                                                                                      │
+ │    43     *   `TextureRect` (named `CardArt`): The main visual space. This will eventually display our GenAI-generated looping     │
+ │       videos or images. For the MVE, a placeholder texture will suffice.                                                           │
+ │    44     *   `Label` (named `NameLabel`): Top-center. Displays the card's name.                                                   │
+ │    45     *   `Label` (named `CostLabel`): Top-left corner. Displays the AP cost.                                                  │
+ │    46     *   `RichTextLabel` (named `EffectLabel`): Bottom half. Describes the card's mechanics. Keywords will be color-coded     │
+ │       using BBCode.                                                                                                                │
+ │    47     *   `HBoxContainer` (named `ResourceIcons`): For displaying resource generator/spender icons (Tension, Arousal) if       │
+ │       applicable.                                                                                                                  │
+ │    48                                                                                                                              │
+ │    49 ### Interaction & Animation                                                                                                  │
+ │    50                                                                                                                              │
+ │    51 *   **Hover:** When hovered, a `Tween` will slightly increase the panel's scale and make its background fully opaque for     │
+ │       better readability.                                                                                                          │
+ │    52 *   **Play:** On play, the panel will animate towards the center of the screen before fading out, triggering the action.     │
+ │    53                                                                                                                              │
+ │    54 ---                                                                                                                          │
+ │    55                                                                                                                              │
+ │    56 ## 3. Style Guide                                                                                                            │
+ │    57                                                                                                                              │
+ │    58 *   **Color Palette:**                                                                                                       │
+ │    59     *   **UI Panels & Text:** Off-whites, light teals, and dark greys for a clean, futuristic look. (`#EAEAEA`, `#5DBCD2`,   │
+ │       `#222222`)                                                                                                                   │
+ │    60     *   **Player Resources:** Use hot, vibrant colors for high contrast and immediate recognition.                           │
+ │    61         *   `Composure`: Red (`#FF4141`)                                                                                     │
+ │    62         *   `Tension`: Bright Blue (`#00FFFF`)                                                                               │
+ │    63         *   `Arousal`: Hot Pink/Orange (`#FF69B4` / `#FFA500`)                                                               │
+ │    64     *   **Keywords:** Use BBCode in `RichTextLabel` to color keywords (e.g., `[color=#00FFFF]Verbal[/color]`).               │
+ │    65                                                                                                                              │
+ │    66 *   **Typography:**                                                                                                          │
+ │    67     *   **Font:** A clean, readable sans-serif font. "Roboto" or "Montserrat" are good candidates to import.                 │
+ │    68     *   **Hierarchy:** Use different font sizes and weights to distinguish card names from effect text.                      │
+ │    69                                                                                                                              │
+ │    70 *   **Animation Philosophy:**                                                                                                │
+ │    71     *   All UI animations should be smooth, fast, and non-intrusive. Use Godot's `Tween` node for fades, movement, and       │
+ │       scaling. Avoid jarring or overly long animations that slow down gameplay.                                                    │
+ │    72                                                                                                                              │
+ │    73 ---                                                                                                                          │
+ │    74 | | [▲ Return to Table of Contents](../../README.md) | |                                                                     │
+ │    75 | :--- | :---: | ---: |                                                                                                      │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The design document is now created and saved in the LDD. This is a critical step that solidifies our plan.
+
+  We are now ready to move into Godot and begin the implementation phase for our MVE. Our first step will be to create the basic scene for a
+  single "Minimalist Data Fragment" card.
+
+  Shall I proceed with creating the Card.tscn scene and its associated script in the /cards directory? I will build it according to the
+  blueprint we just defined in the LDD.
+
+╭───────╮
+│  > y  │
+╰───────╯
+
+✦ Understood. I will now create the Card.gd script file in the /cards directory. This script will define the behavior of our "Minimalist Data
+  Fragment" cards, including how they are populated with data and how they respond to player interaction.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  WriteFile Writing to cards\Card.gd                                                                                              │
+ │                                                                                                                                    │
+ │     1 # Filename: cards/Card.gd                                                                                                    │
+ │     2 # Script for the Card scene, representing a single "Minimalist Data Fragment".                                               │
+ │     3                                                                                                                              │
+ │     4 extends PanelContainer                                                                                                       │
+ │     5                                                                                                                              │
+ │     6 # Signal emitted when the card is clicked, passing itself as an argument.                                                    │
+ │     7 signal card_played(card)                                                                                                     │
+ │     8                                                                                                                              │
+ │     9 # --- Nodes ---                                                                                                              │
+ │    10 @onready var name_label: Label = $NameLabel                                                                                  │
+ │    11 @onready var cost_label: Label = $CostLabel                                                                                  │
+ │    12 @onready var effect_label: RichTextLabel = $EffectLabel                                                                      │
+ │    13 @onready var card_art: TextureRect = $CardArt                                                                                │
+ │    14                                                                                                                              │
+ │    15 # --- Card Data ---                                                                                                          │
+ │    16 # We will eventually create a CardData custom resource for this.                                                             │
+ │    17 var card_data: Dictionary                                                                                                    │
+ │    18                                                                                                                              │
+ │    19 # --- Public Methods ---                                                                                                     │
+ │    20                                                                                                                              │
+ │    21 # Populates the card's UI elements from a dictionary of data.                                                                │
+ │    22 func set_data(data: Dictionary):                                                                                             │
+ │    23 card_data = data                                                                                                             │
+ │    24 name_label.text = card_data.get("name", "Unnamed Card")                                                                      │
+ │    25 cost_label.text = str(card_data.get("cost", "0"))                                                                            │
+ │    26 effect_label.text = card_data.get("effect_text", "No effect.")                                                               │
+ │    27        #card_art.texture = load(card_data.get("art_path", "res://assets/textures/placeholder_art.png")) # Placeholder              │
+ │    28                                                                                                                              │
+ │    29 # --- Internal Godot Methods ---                                                                                             │
+ │    30                                                                                                                              │
+ │    31 # Handle mouse input to detect when the card is played.                                                                      │
+ │    32 func _gui_input(event: InputEvent):                                                                                          │
+ │    33 if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():                        │
+ │    34                emit_signa"card_played", self)                                                                                             │
+ │    35                # Ada visual/audio cue for selection                                                                                       │
+ │    36 get_viewport().set_input_as_handled()                                                                                        │
+ │    37                                                                                                                              │
+ │    38 # --- Signal Connections (for hover effects) ---                                                                             │
+ │    39                                                                                                                              │
+ │    40 func _on_mouse_entered():                                                                                                    │
+ │    41 # Create a tween to animate the hover effect.                                                                                │
+ │    42 var tween = create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)                                             │
+ │    43        # Animatescale and modulate color to indicate selection.                                                                    │
+ │    44 tween.tween_property(self, "scale", Vector2(1.05, 1.05), 0.1)                                                                │
+ │    45 tween.tween_property(self, "modulate", Color(0.8, 0.9, 1.0), 0.1)                                                            │
+ │    46                                                                                                                              │
+ │    47                                                                                                                              │
+ │    48 func _on_mouse_exited():                                                                                                     │
+ │    49        # Createa tween to animate back to the default state.                                                                       │
+ │    50 var tween = create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)                                             │
+ │    51        # Animate backto normal scale and color.                                                                                    │
+ │    52 tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1)                                                                  │
+ │    53 tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0), 0.1)                                                            │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The Card.gd script is now in place.
+
+  Next, I will create the corresponding Godot scene file, Card.tscn. This scene will contain the node structure we defined in the LDD, with
+  all the Label, TextureRect, and other nodes correctly named and parented. The Card.gd script will be attached to the root node.
+
+  Because .tscn files contain scene-specific resource IDs, I cannot generate a complete, valid file from scratch.
+
+  Instead, I will create a placeholder Card.tscn file. You will need to open this file in the Godot editor, which will automatically
+  populate it with the correct resource IDs. After saving it in the editor, the scene will be fully functional.
+
+  I will now create the placeholder Card.tscn.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  WriteFile Writing to cards\Card.tscn                                                                                            │
+ │                                                                                                                                    │
+ │     1 [gd_scene load_steps=2 format=3 uid="uid://bciyvj2fxtd2h"]                                                                   │
+ │     2                                                                                                                              │
+ │     3 [ext_resource type="Script" path="res://cards/Card.gd" id="1_f8kgr"]                                                         │
+ │     4                                                                                                                              │
+ │     5 [node name="Card" type="PanelContainer"]                                                                                     │
+ │     6 custom_minimum_size = Vector2(150, 220)                                                                                      │
+ │     7 script = ExtResource("1_f8kgr")                                                                                              │
+ │     8                                                                                                                              │
+ │     9 [node name="NameLabel" type="Label" parent="."]                                                                              │
+ │    10 layout_mode = 2                                                                                                              │
+ │    11 alignment = 1                                                                                                                │
+ │    12                                                                                                                              │
+ │    13 [node name="CostLabel" type="Label" parent="."]                                                                              │
+ │    14 layout_mode = 2                                                                                                              │
+ │    15                                                                                                                              │
+ │    16 [node name="EffectLabel" type="RichTextLabel" parent="."]                                                                    │
+ │    17 layout_mode = 2                                                                                                              │
+ │    18                                                                                                                              │
+ │    19 [node name="CardArt" type="TextureRect" parent="."]                                                                          │
+ │    20 layout_mode = 2                                                                                                              │
+ │    21 expand_mode = 1                                                                                                              │
+ │    22                                                                                                                              │
+ │    23 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]                                               │
+ │    24 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]                                                 │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The placeholder Card.tscn and its Card.gd script are now created in the /cards directory.
+
+  Next Step for You:
+
+   1. Open the Godot Editor.
+   2. Open the `Card.tscn` file.
+   3. Save the scene immediately (Ctrl+S). This will resolve the placeholder resource IDs and make the scene fully functional.
+
+  Once you've done that, we will have our fundamental building block for the combat UI. We can then move on to creating the main combat
+  scene and laying out the full HUD.
+
+  Let me know when you have saved the scene in Godot, and we can proceed.
+
+╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│  > Before I do this, should I make a new project in GoDot Project Manager and make the project path d:\ProjectChimera? or somewhere else?  │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+✦ That's a crucial question, and getting it right is key.
+
+  You should not create a new project that makes a new folder.
+
+  Instead, do this:
+
+   1. Open the Godot Project Manager.
+   2. Click the "Import" or "Scan" button.
+   3. Navigate to and select the `D:\ProjectChimera` folder.
+
+  Godot will recognize that there isn't a project.godot file yet and will prompt you to create one. This is exactly what you want. This
+  action will initialize your existing folder structure as a Godot project, creating the project.godot file directly inside
+  D:\ProjectChimera.
+
+  This is the correct way to turn our existing, well-organized folder structure into a functional Godot project.
+
+  Once you've done that and the project opens in the editor, you can then proceed with opening Card.tscn and saving it.
+
+╭─────────────────────────────────╮
+│  > i have done everything here  │
+╰─────────────────────────────────╯
+
+✦ Excellent. With the Card.tscn scene properly initialized in the editor, our foundational building block is ready.
+
+  Now, we'll create the main combat screen that will contain the full HUD and manage the player's hand.
+
+  First, I will create the script for this new scene, CombatUI.gd, in the /ui directory. This script will manage the overall layout, handle
+  drawing cards, and instance our Card.tscn scenes into the player's hand.Understood. I will now create the CombatUI.gd script in the /ui
+  directory. This script will manage the main combat interface, including the player's hand, resource displays, and all other HUD elements.
+  It will be responsible for creating and managing the individual card scenes.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  WriteFile Writing to ui\CombatUI.gd                                                                                             │
+ │                                                                                                                                    │
+ │     1 # Filename: ui/CombatUI.gd                                                                                                   │
+ │     2 # Manages the entire combat HUD, including player/opponent vitals and the card hand.                                         │
+ │     3                                                                                                                              │
+ │     4 extends Control                                                                                                              │
+ │     5                                                                                                                              │
+ │     6 # --- Preloaded Scenes ---                                                                                                   │
+ │     7 const CardScene = preload("res://cards/Card.tscn")                                                                           │
+ │     8                                                                                                                              │
+ │     9 # --- Nodes ---                                                                                                              │
+ │    10 # We will connect these in the Godot Editor after creating the scene.                                                        │
+ │    11 @onready var player_hand_container: HBoxContainer = $PlayerHandContainer                                                     │
+ │    12                                                                                                                              │
+ │    13 # --- Game State ---                                                                                                         │
+ │    14 var deck: Array[Dictionary] = []                                                                                             │
+ │    15 var hand: Array[Node] = []                                                                                                   │
+ │    16 var discard_pile: Array[Dictionary] = []                                                                                     │
+ │    17                                                                                                                              │
+ │    18 # --- Public Methods ---                                                                                                     │
+ │    19                                                                                                                              │
+ │    20 # Initializes the combat scene. For the MVE, we'll use some test data.                                                       │
+ │    21 func start_combat():                                                                                                         │
+ │    22 # Create a sample deck for testing.                                                                                          │
+ │    23 deck = [                                                                                                                     │
+ │    24 { "name": "Whisper Promise", "cost": 1, "effect_text": "Generate 10 [color=#00FFFF]Tension[/color]." },                      │
+ │    25 { "name": "Caress Thigh", "cost": 1, "effect_text": "Generate 8 [color=#FF69B4]Arousal[/color]." },                          │
+ │    26 { "name": "Steel Nerves", "cost": 0, "effect_text": "Gain 5 [color=lightblue]Focus[/color]." },                              │
+ │    27 { "name": "Gentle Kiss", "cost": 2, "effect_text": "Deal 10 [color=red]Composure[/color] damage." },                         │
+ │    28 { "name": "Deep Gaze", "cost": 1, "effect_text": "Opponent loses 5 [color=lightblue]Focus[/color]." }                        │
+ │    29        ]                                                                                                                           │
+ │    30                                                                                                                                    │
+ │    31 # Draw an initial hand.                                                                                                      │
+ │    32 draw_cards(5)                                                                                                                │
+ │    33                                                                                                                              │
+ │    34 # Draws a specified number of cards from the deck.                                                                           │
+ │    35 func draw_cards(amount: int):                                                                                                │
+ │    36        fori in range(amount):                                                                                                      │
+ │    37                if de.is_empty():                                                                                                          │
+ │    38 # Reshuffle discard pile into deck if needed (not implemented for MVE)                                                       │
+ │    39 break                                                                                                                        │
+ │    40                                                                                                                                           │
+ │    41                vacard_data = deck.pop_front()                                                                                             │
+ │    42 add_card_to_hand(card_data)                                                                                                  │
+ │    43                                                                                                                              │
+ │    44 # Instances a new card scene and adds it to the player's hand.                                                               │
+ │    45 func add_card_to_hand(card_data: Dictionary):                                                                                │
+ │    46        varnew_card = CardScene.instantiate()                                                                                       │
+ │    47        new_car.set_data(card_data)                                                                                                 │
+ │    48        player_hand_containe.add_child(new_card)                                                                                    │
+ │    49        han.append(new_card)                                                                                                        │
+ │    50                                                                                                                                    │
+ │    51 # Connect the card's played signal to our handler.                                                                           │
+ │    52        new_car.card_played.connect(_on_card_played)                                                                                │
+ │    53                                                                                                                              │
+ │    54                                                                                                                              │
+ │    55 # --- Signal Handlers ---                                                                                                    │
+ │    56                                                                                                                              │
+ │    57 # Called when a card in the hand is clicked.                                                                                 │
+ │    58 func _on_card_played(card_node):                                                                                             │
+ │    59 print("Card played: ", card_node.card_data.name)                                                                             │
+ │    60 # MVE: For now, just remove the card from the hand visually and from our data.                                               │
+ │    61        han.erase(card_node)                                                                                                        │
+ │    62        card_nod.queue_free()                                                                                                       │
+ │    63                                                                                                                              │
+ │    64 # --- Godot Methods ---                                                                                                      │
+ │    65                                                                                                                              │
+ │    66 func _ready():                                                                                                               │
+ │    67 # Start combat automatically for testing purposes.                                                                           │
+ │    68 start_combat()                                                                                                               │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The CombatUI.gd script is now created.
+
+  As before, I will now create a placeholder CombatUI.tscn scene file in the /ui directory. This scene will serve as the root for our entire
+  combat interface. It will contain the PlayerHandContainer that the script references.
+
+  Next Step for You:
+
+   1. After I create the file, open CombatUI.tscn in the Godot editor.
+   2. The scene will be very simple, containing only the root Control node and a HBoxContainer for the hand.
+   3. Save the scene (Ctrl+S) to have Godot initialize it correctly.
+
+  I will now create the placeholder CombatUI.tscn.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  WriteFile Writing to ui\CombatUI.tscn                                                                                           │
+ │                                                                                                                                    │
+ │     1 [gd_scene load_steps=2 format=3 uid="uid://d1yqf6w8qjqg7"]                                                                   │
+ │     2                                                                                                                              │
+ │     3 [ext_resource type="Script" path="res://ui/CombatUI.gd" id="1_abcde"]                                                        │
+ │     4                                                                                                                              │
+ │     5 [node name="CombatUI" type="Control"]                                                                                        │
+ │     6 layout_mode = 3                                                                                                              │
+ │     7 anchors_preset = 15                                                                                                          │
+ │     8 anchor_right = 1.0                                                                                                           │
+ │     9 anchor_bottom = 1.0                                                                                                          │
+ │    10 script = ExtResource("1_abcde")                                                                                              │
+ │    11                                                                                                                              │
+ │    12 [node name="PlayerHandContainer" type="HBoxContainer" parent="."]                                                            │
+ │    13 layout_mode = 1                                                                                                              │
+ │    14 anchors_preset = 8                                                                                                           │
+ │    15 anchor_left = 0.5                                                                                                            │
+ │    16 anchor_top = 1.0                                                                                                             │
+ │    17 anchor_right = 0.5                                                                                                           │
+ │    18 anchor_bottom = 1.0                                                                                                          │
+ │    19 grow_horizontal = 2                                                                                                          │
+ │    20 grow_vertical = 0                                                                                                            │
+ │    21 alignment = 1                                                                                                                │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The CombatUI.tscn and its script are now in place.
+
+  Please go ahead and open CombatUI.tscn in the Godot editor and save it.
+
+  Once you've done that, you can actually run the `CombatUI.tscn` scene directly (by pressing F6 with that scene active). You should see
+  five of our placeholder "Minimalist Data Fragment" cards appear in a row at the bottom of the screen, populated with the test data from
+  the script.
+
+  Let me know when you have run the scene and can see the cards. This will confirm that our core systems are working together correctly.
+
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│  > Invalid assignment of property or key 'text' with value of type 'String' on a base object of type 'Nil'.  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+✦ Ah, an excellent catch. That is a classic Godot error, and my apologies for letting it slip through.
+
+  You've diagnosed it perfectly. The error "Invalid assignment... on a base object of type 'Nil'" means the script is trying to set the
+  .text property on a Label node that it hasn't found yet (it's Nil, or null).
+
+  The Cause:
+
+  In CombatUI.gd, I wrote the code in the wrong order.
+   1. It creates a new card (CardScene.instantiate()).
+   2. It immediately tries to set the card's data (new_card.set_data(...)).
+   3. Then it adds the card to the scene tree (player_hand_container.add_child(...)).
+
+  The problem is that the labels inside the card scene (name_label, cost_label, etc.) are only made available to the script after the card
+  is added to the scene tree. I was trying to access them one step too early.
+
+  The Fix:
+
+  I need to swap those two lines of code. I will modify CombatUI.gd to add the card to the scene first, which will make its internal nodes
+  ready, and then populate it with data.
+
+  I will now apply this fix.
+ ╭────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+ │ ✔  Edit ui\CombatUI.gd:      var new_card = CardScene.inst... =>     var new_card = CardScene.inst...                                     │
+ │                                                                                                                                    │
+ │    44     # Instances a new card scene and adds it to the player's hand.                                                           │
+ │    45     func add_card_to_hand(card_data: Dictionary):                                                                            │
+ │    46         var new_card = CardScene.instantiate()                                                                               │
+ │    47   -     new_card.set_data(card_data)                                                                                         │
+ │    47         player_hand_container.add_child(new_card)                                                                            │
+ │    48   +     new_card.set_data(card_data)                                                                                         │
+ │    49         hand.append(new_card)                                                                                                │
+ │    50                                                                                                                              │
+ │    51         # Connect the card's played signal to our handler.                                                                   │
+ ╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ The fix has been applied. The script will now correctly initialize the card scenes.
+
+  Please try running the CombatUI.tscn scene again. It should now work as expected, displaying the five test cards at the bottom of the
+  screen. Let me know the result.
