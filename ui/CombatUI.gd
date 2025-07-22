@@ -7,27 +7,27 @@ extends Control
 const CardScene = preload("res://cards/Card.tscn")
 
 # --- Nodes ---
-@onready var player_hand_container: HBoxContainer = $PlayerHandContainer
-@onready var end_turn_button: Button = $PlayerCockpit/VBoxContainer/ActionContainer/EndTurnButton
-@onready var deck_count_label: Label = $PlayerCockpit/VBoxContainer/ActionContainer/DeckCountLabel
-@onready var discard_pile_label: Label = $PlayerCockpit/VBoxContainer/ActionContainer/DiscardPileLabel
+@onready var player_hand_container: Control = $PlayerHandContainer
+@onready var end_turn_button: Button = $PlayerResourcesPod/VBoxContainer/ActionContainer/EndTurnButton
+@onready var deck_count_label: Label = $PlayerResourcesPod/VBoxContainer/ActionContainer/DeckCountLabel
+@onready var discard_pile_label: Label = $PlayerResourcesPod/VBoxContainer/ActionContainer/DiscardPileLabel
 
 
 # Opponent Nodes
-@onready var opponent_composure_bar: ProgressBar = $OpponentVitalsContainer/VBoxContainer/OpponentComposureBar
-@onready var opponent_composure_label: Label = $OpponentVitalsContainer/VBoxContainer/OpponentComposureBar/OpponentComposureLabel
-@onready var opponent_inhibition_chunks = [$OpponentVitalsContainer/VBoxContainer/OpponentInhibitionContainer/OpponentInhibitionChunk1, $OpponentVitalsContainer/VBoxContainer/OpponentInhibitionContainer/OpponentInhibitionChunk2]
-@onready var opponent_focus_icon = $OpponentVitalsContainer/VBoxContainer/OpponentStats/OpponentFocusIcon
-@onready var opponent_guarded_upper: Label = $OpponentVitalsContainer/VBoxContainer/OpponentStats/OpponentGuardedContainer/OpponentGuardedUpper
-@onready var opponent_guarded_lower: Label = $OpponentVitalsContainer/VBoxContainer/OpponentStats/OpponentGuardedContainer/OpponentGuardedLower
+@onready var opponent_composure_bar: ProgressBar = $OpponentVitalsPod/VBoxContainer/OpponentComposureBar
+@onready var opponent_composure_label: Label = $OpponentVitalsPod/VBoxContainer/OpponentComposureBar/OpponentComposureLabel
+@onready var opponent_inhibition_chunks = [$OpponentVitalsPod/VBoxContainer/OpponentInhibitionContainer/OpponentInhibitionChunk1, $OpponentVitalsPod/VBoxContainer/OpponentInhibitionContainer/OpponentInhibitionChunk2]
+@onready var opponent_focus_icon = $OpponentStatusPod/VBoxContainer/OpponentStats/OpponentFocusIcon
+@onready var opponent_guarded_upper: Label = $OpponentStatusPod/VBoxContainer/OpponentStats/OpponentGuardedContainer/OpponentGuardedUpper
+@onready var opponent_guarded_lower: Label = $OpponentStatusPod/VBoxContainer/OpponentStats/OpponentGuardedContainer/OpponentGuardedLower
 
 # Player Nodes
-@onready var player_composure_bar: ProgressBar = $PlayerCockpit/VBoxContainer/PlayerVitalsContainer/PlayerComposureBar
-@onready var player_composure_label: Label = $PlayerCockpit/VBoxContainer/PlayerVitalsContainer/PlayerComposureBar/PlayerComposureLabel
-@onready var player_inhibition_chunks = [$PlayerCockpit/VBoxContainer/PlayerVitalsContainer/PlayerInhibitionContainer/PlayerInhibitionChunk1, $PlayerCockpit/VBoxContainer/PlayerVitalsContainer/PlayerInhibitionContainer/PlayerInhibitionChunk2, $PlayerCockpit/VBoxContainer/PlayerVitalsContainer/PlayerInhibitionContainer/PlayerInhibitionChunk3]
-@onready var player_focus_icon = $PlayerCockpit/VBoxContainer/PlayerStats/PlayerFocusIcon
-@onready var player_tension_label: Label = $PlayerCockpit/VBoxContainer/PlayerStats/PlayerTensionLabel
-@onready var player_arousal_label: Label = $PlayerCockpit/VBoxContainer/PlayerStats/PlayerArousalLabel
+@onready var player_composure_bar: ProgressBar = $PlayerVitalsPod/VBoxContainer/PlayerComposureBar
+@onready var player_composure_label: Label = $PlayerVitalsPod/VBoxContainer/PlayerComposureBar/PlayerComposureLabel
+@onready var player_inhibition_chunks = [$PlayerVitalsPod/VBoxContainer/PlayerInhibitionContainer/PlayerInhibitionChunk1, $PlayerVitalsPod/VBoxContainer/PlayerInhibitionContainer/PlayerInhibitionChunk2, $PlayerVitalsPod/VBoxContainer/PlayerInhibitionContainer/PlayerInhibitionChunk3]
+@onready var player_focus_icon = $PlayerResourcesPod/VBoxContainer/PlayerStats/PlayerFocusIcon
+@onready var player_tension_label: Label = $PlayerResourcesPod/VBoxContainer/PlayerStats/PlayerTensionLabel
+@onready var player_arousal_label: Label = $PlayerResourcesPod/VBoxContainer/PlayerStats/PlayerArousalLabel
 
 # --- Game State ---
 var deck: Array[Dictionary] = []
@@ -46,12 +46,13 @@ func update_player_vitals(data: Dictionary):
 	player_composure_bar.value = composure
 	player_composure_label.text = "%d/%d" % [composure, max_composure]
 
-	# Update Inhibition Chunks (20, 20, 10)
-	var inhibition_remaining = float(inhibition)
-	for chunk in player_inhibition_chunks:
-		var chunk_value = min(inhibition_remaining, chunk.max_value)
-		chunk.value = chunk_value
-		inhibition_remaining -= chunk_value
+	# Update Inhibition Chunks (20, 20, 10) - Reversed for right-to-left depletion
+	var total_damage = data.get("max_inhibition", 50) - inhibition
+	for i in range(player_inhibition_chunks.size() - 1, -1, -1):
+		var chunk = player_inhibition_chunks[i]
+		var damage_to_deal = min(total_damage, chunk.max_value)
+		chunk.value = chunk.max_value - damage_to_deal
+		total_damage -= damage_to_deal
 	
 	player_tension_label.text = "Tension: %d" % data.get("tension", 0)
 	player_arousal_label.text = "Arousal: %d" % data.get("arousal", 0)
@@ -69,14 +70,12 @@ func update_opponent_vitals(data: Dictionary):
 	opponent_composure_bar.value = composure
 	opponent_composure_label.text = "%d/%d" % [composure, max_composure]
 
-	# Update Inhibition Chunks (25, 25) - Reversed
-	var total_damage = data.get("max_inhibition", 50) - inhibition
-	# Iterate backwards for right-to-left depletion
-	for i in range(opponent_inhibition_chunks.size() - 1, -1, -1):
-		var chunk = opponent_inhibition_chunks[i]
-		var damage_to_deal = min(total_damage, chunk.max_value)
-		chunk.value = chunk.max_value - damage_to_deal
-		total_damage -= damage_to_deal
+	# Update Inhibition Chunks (25, 25)
+	var inhibition_remaining = float(inhibition)
+	for chunk in opponent_inhibition_chunks:
+		var chunk_value = min(inhibition_remaining, chunk.max_value)
+		chunk.value = chunk_value
+		inhibition_remaining -= chunk_value
 
 	opponent_focus_icon.set_value(str(focus))
 	opponent_focus_icon.visible = focus > 0
@@ -148,10 +147,47 @@ func add_card_to_hand(card_data: Dictionary):
 	
 	# Connect the card'''s played signal to our handler.
 	new_card.card_played.connect(_on_card_played)
+	
+	_update_hand_layout()
 
 func _update_deck_discard_labels():
 	deck_count_label.text = "Deck: %d" % deck.size()
 	discard_pile_label.text = "Discard: %d" % discard_pile.size()
+
+# --- Hand Layout ---
+
+func _update_hand_layout():
+	var hand_size = hand.size()
+	if hand_size == 0:
+		return
+
+	var container_width = player_hand_container.size.x
+	var card_width = hand[0].size.x
+	
+	# --- Tunable Parameters for the Fan ---
+	var fan_angle_degrees = 30.0  # The total angle of the fan
+	var y_offset = 20.0          # How much the cards are raised in the center
+	# ------------------------------------
+
+	var start_angle = -fan_angle_degrees / 2.0
+	var angle_step = fan_angle_degrees / float(hand_size) if hand_size > 1 else 0
+	
+	var total_card_width = card_width * hand_size
+	var overlap_percentage = 0.4 # Adjust this to control how much cards overlap
+	var displayed_width = total_card_width * (1.0 - overlap_percentage)
+	
+	var start_x = (container_width - displayed_width) / 2.0
+
+	for i in range(hand_size):
+		var card = hand[i]
+		var angle = start_angle + i * angle_step + angle_step / 2.0
+		
+		var x_pos = start_x + i * (card_width * (1.0 - overlap_percentage))
+		var y_pos = abs(sin(deg_to_rad(angle))) * -y_offset
+
+		card.rotation_degrees = angle
+		card.position = Vector2(x_pos, y_pos)
+		card.z_index = i # Ensure cards overlap correctly
 
 # --- Signal Handlers ---
 
@@ -165,6 +201,7 @@ func _on_card_played(card_node):
 	card_node.queue_free()
 	
 	_update_deck_discard_labels()
+	_update_hand_layout()
 
 func _on_EndTurnButton_pressed():
 	print("Turn Ended")
