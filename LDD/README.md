@@ -30,7 +30,7 @@ Welcome to the central design document for Project Chimera (working title `NSFW_
     *   [2.1.3 Post-Run Sequence - Essence Conversion](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.1]%20The%20Core%20Loop/[2.1.3]%20Post-Run%20Sequence%20-%20Essence%20Conversion.md)
 *   **[2.2] The Sex Combat**
     *   [2.2.1 Encounter Flow & The Escalation State System](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.1]%20Encounter%20Flow%20&%20The%20Escalation%20State%20System.md)
-    *   [2.2.2 Core Resources - Tension & Arousal](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.2]%20Core%20Resources%20-%20Tension%20&%20Arousal.md)
+    *   [2.2.2 Core Resource - The Arousal Meter](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.2]%20Core%20Resource%20-%20The%20Arousal%20Meter.md)
     *   [2.2.3 The Defensive System - Focus, Inhibition, Composure](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.3]%20The%20Defensive%20System%20-%20Focus,%20Inhibition,%20Composure.md)
     *   [2.2.4 Key States - Guarded & Exposed](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.4]%20Key%20States%20-%20Guarded%20&%20Exposed.md)
     *   [2.2.5 The Positional System](./[2]%20Gameplay%20Systems%20&%20Mechanics/[2.2]%20The%20Sex%20Combat/[2.2.5]%20The%20Positional%20System.md)
@@ -63,7 +63,7 @@ Welcome to the central design document for Project Chimera (working title `NSFW_
 *   **[3.3] Dialogue & Event Systems**
     *   [3.3.1 The NPC Memory Trigger System (The 5 Indices)](./[3]%20Narrative%20&%20World/[3.3]%20Dialogue%20&%20Event%20Systems/[3.3.1]%20The%20NPC%20Memory%20Trigger%20System%20(The%205%20Indices).md)
     *   [3.3.2 The 'Key Moments' Dialogue Approach](./[3]%20Narrative%20&%20World/[3.3]%20Dialogue%20&%20Event%20Systems/[3.3.2]%20The%20'Key%20Moments'%20Dialogue%20Approach.md)
-    *   [3.3.3 The 'Subtitled Intent' & Alternative Verbal Card Animations](./[3]%20Narrative%20&%20World/[3.3]%20Dialogue%20&%20Event%20Systems/[3.3.3]%20The%20'Subtitled%20Intent'%20&%20Alternative%20Verbal%20Card%20Animations.md)
+    *   [3.3.3 Mental Card Animations](./[3]%20Narrative%20&%20World/[3.3]%20Dialogue%20&%20Event%20Systems/[3.3.3]%20The%20'Subtitled%20Intent'%20&%20Alternative%20Mental%20Card%20Animations.md)
 
 ### [4] Art & Technical Implementation
 *This section details the tools and standards for building the game.*

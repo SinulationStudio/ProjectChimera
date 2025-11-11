@@ -29,7 +29,7 @@ The combat UI must clearly represent the following key stats for both the **Play
 *   **Inhibition (Armor/Shield):** A secondary defensive layer composed of multiple, breakable **chunks**. Each chunk represents a layer of clothing or mental defense. When a chunk's value is depleted, it breaks, triggering a narrative or visual event (e.g., an article of clothing is removed, a "Guarded" buff is lost). Represented by a **cyan bar**.
 *   **Focus (Temporary Shield):** A temporary, regenerating shield that absorbs incoming Composure damage. Represented by a **shield icon with a number**.
 *   **Guarded (Buff):** A percentage-based damage reduction buff that is active as long as specific Inhibition chunks are intact. (e.g., `G[U]: 30%` for "Upper Body Guard").
-*   **Tension & Arousal (Resources):** The primary resources the player spends to play cards. These are numerical values.
+*   **Arousal Meter (Shared Pressure Track):** A single escalation bar that both combatants push upward. Crossing thresholds unlocks finishing moves and other effects.
 
 ## 4. UI Design Philosophy: "The Minimalist Visor"
 
@@ -47,7 +47,7 @@ The UI should feel like a clean, diegetic, futuristic heads-up display (HUD) pro
     *   Mirrors the opponent's layout exactly to maintain a consistent design language.
     *   A horizontal, chunked **Inhibition Bar**.
     *   A larger, horizontal **Composure Bar** below it.
-    *   A status block containing the **Focus Icon** and labels for **Tension** and **Arousal**.
+    *   A status block containing the **Focus Icon** and readouts for the shared **Arousal Meter** plus the player's **Self Arousal**.
     *   Numerical readouts are displayed **inside** their respective bars.
 
 *   **Card Hand (Bottom, below Player Cockpit):**
