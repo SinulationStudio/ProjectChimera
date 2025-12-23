@@ -1,131 +1,101 @@
-# ProjectChimera - Complete Tactical Card Game
+# Project Chimera - Tactical Card Game
 
-A fully responsive tactical card game with animated backgrounds and adaptive UI scaling.
+A responsive React-based tactical card game with animated backgrounds and professional UI design.
 
-## 🚀 Quick Start (For AI/Chat Session)
-
-1. **Upload all files to new workspace**
-2. **Follow the setup instructions in `SETUP-INSTRUCTIONS.md`**
-3. **Run: `npm run dev` or `pnpm run dev`**
-4. **Deploy using the same deployment process**
-
-## 🎮 What You Get
-
-- ✅ **Responsive UI** - Automatically scales from mobile to 4K displays
-- ✅ **Animated Background** - Looping video background with user interaction handling
-- ✅ **Complete Card System** - 20 cards with 5 different card types
-- ✅ **Tactical Gameplay** - 3-layer defense system (Focus → Inhibition → Composure)
-- ✅ **AI Opponent** - Sarah with adaptive escalation system
-- ✅ **Clean Architecture** - Modular React components and utilities
-
-## 🎯 Core Features
-
-### Responsive Design System
-- **Base Design**: Optimized for 1920x1080 (desktop)
-- **Scaling**: 0.5x (mobile) to 1.5x (4K) automatically
-- **Smart Clamping**: Prevents UI from becoming unusable on any device
-
-### Game Mechanics
-- **Player Stats**: Composure, Inhibition, Tension, Arousal, Focus, AP, Clothing
-- **Sarah's Stats**: Composure, Inhibition, Clothing (with exposure system)
-- **Card Classes**: Verbal, Physical Upper, Physical Lower, Intimate, Defensive
-- **Escalation States**: Approach → Close Quarters → Embrace → Intimacy
-
-### Technical Stack
-- **Frontend**: React 18 + TypeScript
-- **Styling**: Tailwind CSS
-- **Build Tool**: Vite
-- **State Management**: React hooks
-- **Video**: HTML5 video with auto-play handling
-
-## 📁 Project Structure
+## File Structure
 
 ```
-src/
-├── components/
-│   ├── Card.tsx              # Game card component with hover effects
-│   └── ErrorBoundary.tsx     # React error handling
-├── data/
-│   └── startingDeck.ts       # 20-card starting deck
-├── types/
-│   └── game.ts              # All TypeScript interfaces
-├── utils/
-│   └── gameLogic.ts         # Core game mechanics
-├── App.tsx                  # Main game component
-├── main.tsx                 # React entry point
-└── index.css                # Global styles
-
-public/
-├── videos/
-│   └── infinite_loop_perfect_v2.mp4  # Main background video
-└── images/
-    └── (background images)
-
-Configuration files: package.json, vite.config.ts, tailwind.config.js, etc.
+project-chimera-game/
+├── public/
+│   └── videos/
+│       └── infinite_loop_perfect_v2.mp4    # Background video (1.6MB)
+├── src/
+│   ├── components/
+│   │   ├── Card.tsx                         # Interactive card component
+│   │   └── ErrorBoundary.tsx                # React error boundary
+│   ├── data/
+│   │   └── startingDeck.ts                  # 20-card deck definition
+│   ├── types/
+│   │   └── game.ts                          # TypeScript interfaces
+│   ├── utils/
+│   │   └── gameLogic.ts                     # Core game mechanics
+│   ├── App.tsx                              # Main game component
+│   ├── main.tsx                             # React entry point
+│   └── index.css                            # Global styles
+├── .gitignore                               # Git ignore rules
+├── index.html                               # HTML entry point
+├── package.json                             # Dependencies and scripts
+├── postcss.config.js                        # PostCSS configuration
+├── tailwind.config.js                       # Tailwind CSS configuration
+├── tsconfig.json                            # TypeScript configuration
+└── vite.config.ts                           # Vite build configuration
 ```
 
-## 🎲 How to Play
+## Installation & Setup
 
-1. **Start Game**: Click the initial "Start Game" button
-2. **Play Cards**: Click cards in your hand to play them (requires AP)
-3. **Resource Management**: Manage Tension, Arousal, and Focus
-4. **End Turn**: Click "End Turn" to let Sarah attack
-5. **Win Condition**: Reduce Sarah's Composure to 0
-6. **Lose Condition**: Your Composure reaches 0
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-## 🔧 Development Commands
-
+### Install Dependencies
 ```bash
-# Install dependencies
 npm install
+```
 
-# Start development server
+### Development Server
+```bash
 npm run dev
+```
+Runs on http://localhost:5173
 
-# Build for production
+### Build for Production
+```bash
 npm run build
-
-# Preview production build
 npm run preview
 ```
 
-## 📱 Responsive Behavior
+## Technologies Used
 
-- **Mobile (360px)**: UI scales to 0.5x, all elements remain functional
-- **Tablet (768px)**: UI scales to 0.8x, optimal touch targets
-- **Desktop (1920px)**: UI at 1.0x (base design)
-- **4K (3840px)**: UI scales to 1.5x, larger text and spacing
+- **React 18.3.1** - UI framework
+- **TypeScript** - Type safety
+- **Vite 6.0.1** - Build tool and dev server
+- **Tailwind CSS 3.4.16** - Styling framework
+- **PostCSS** - CSS processing
+- **HTML5 Video** - Animated background
 
-## 🎨 Visual Design
+## Game Features
 
-- **Clean Stats Boxes**: Semi-transparent with blur effects
-- **Progress Bars**: Color-coded gradients for different stats
-- **Card Hover Effects**: Cards lift and highlight on hover
-- **AP Orbs**: Visual representation of available action points
-- **Action Log**: Recent game events display
-- **Timeline**: Shows current escalation state
+- **20-Card Tactical Deck** with 5 card classes
+- **Responsive Design** - Mobile to 4K support
+- **Sarah AI Opponent** with intelligent behavior
+- **Resource Management** - AP, Tension, Arousal, Focus
+- **3-Layer Defense** - Focus → Inhibition → Composure
+- **Escalation System** - Approach → Close Quarters → Embrace → Intimacy
+- **Animated Background** with fallback system
 
-## 🏗️ Architecture Highlights
+## Card Classes
 
-### Responsive Scaling System
-```typescript
-const scaled = {
-  top: (base: number) => `${base * screenSize.scale}px`,
-  left: (base: number) => `${base * screenSize.scale}px`,
-  width: (base: number) => `${base * screenSize.scale}px`,
-  fontSize: (base: number) => `clamp(${base * 0.7}px, ${base * screenSize.scale}px, ${base * 1.2}px)`
-};
-```
+1. **Verbal** - Conversation-based actions
+2. **Physical Upper** - Breast/upper body actions  
+3. **Physical Lower** - Leg/lower body actions
+4. **Intimate** - Sexual/close actions
+5. **Defensive** - Building defenses and focus
 
-### Game State Management
-- **TypeScript Interfaces**: Full type safety for all game data
-- **Immutable Updates**: All state changes create new state objects
-- **Real-time Updates**: Instant UI feedback for all actions
+## Responsive Scaling
 
-## 🚢 Deployment
+The game automatically adapts to screen size:
+- **Mobile (375px)**: 0.75x scale
+- **Tablet (768px)**: 0.8x scale  
+- **Desktop (1920px)**: 1.0x scale
+- **4K (3840px)**: 1.5x scale
 
-This project deploys perfectly using the standard React/Vite deployment process. The video background is automatically handled with proper fallbacks.
+## Notes
 
----
+- The background video may not autoplay in some browsers due to policies
+- Fallback gradient background is provided if video fails to load
+- Game uses professional glassmorphism UI design
+- All assets and code are included in this package
 
-**Created by MiniMax Agent** | **Version 1.0** | **November 2025**
+## License
+
+MIT License - Free to use and modify

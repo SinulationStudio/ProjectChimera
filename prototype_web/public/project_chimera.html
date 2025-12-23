@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Chimera - Tactical Card Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom animations and effects */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.8); }
+        }
+        
+        .glow-cyan { animation: pulse-glow 2s infinite; }
+        
+        .backdrop-blur-sm { backdrop-filter: blur(4px); }
+        
+        /* Card hover effects */
+        .card-hover:hover {
+            transform: translateY(-16px) scale(1.05);
+            z-index: 20;
+        }
+        
+        /* AP orb animations */
+        .ap-orb-active {
+            background: linear-gradient(45deg, #22d3ee, #06b6d4);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+            animation: pulse-glow 1.5s infinite;
+        }
+        
+        .ap-orb-inactive {
+            background: linear-gradient(45deg, #374151, #4b5563);
+            box-shadow: none;
+        }
+        
+        /* Video loading states */
+        .video-loading {
+            background: radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%);
+        }
+        
+        /* Action log scroll */
+        .action-log {
+            max-height: 4rem;
+            overflow-y: auto;
+        }
+        
+        .action-log::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .action-log::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .action-log::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="bg-black text-white overflow-hidden">
+    <div id="gameRoot" class="relative w-screen h-screen overflow-hidden">
+        <!-- Video Background -->
+        <div id="videoBackground" class="absolute inset-0 flex items-center justify-center">
+            <video id="backgroundVideo" 
+                   class="absolute inset-0 w-full h-full object-contain" 
+                   style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; opacity: 1; display: block; background-color: transparent;"
+                   loop 
+                   muted 
+                   playsinline 
+                   preload="auto">
+                <source src="videos/infinite_loop_perfect_v2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="startScreen" class="absolute inset-0 flex items-center justify-center z-50" style="background-color: rgba(0, 0, 0, 0.8);">
+            <div class="bg-white/95 p-8 rounded-lg text-center max-w-md text-black">
+                <h2 class="text-2xl font-bold mb-4">ProjectChimera</h2>
+                <p class="text-gray-700 mb-4">
+                    An adult tactical card game with responsive design. Click to begin.
+                </p>
+                <div class="text-xs text-gray-500 mb-4">
+                    <span id="screenInfo">Scale: 1.00x | Screen: 1920x1080</span>
+                </div>
+                <button id="startButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                    Start Game
+                </button>
+            </div>
+        </div>
+
+        <!-- Game UI Overlay -->
+        <div id="gameUI" class="hidden">
+            <!-- Player Status Panel - Top Left -->
+            <div id="playerPanel" class="absolute z-10 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10" style="top: 24px; left: 24px; width: 208px; padding: 16px;">
+                <div class="space-y-3">
+                    <!-- Composure -->
+                    <div>
+                        <div class="flex justify-between mb-1 text-sm">
+                            <span>Composure</span>
+                            <span id="playerComposure">100/100</span>
+                        </div>
+                        <div class="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                            <div id="playerComposureBar" class="h-full bg-gradient-to-r from-pink-500 to-red-500 transition-all duration-300" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Inhibition -->
+                    <div>
+                        <div class="flex justify-between mb-1 text-sm">
+                            <span>Inhibition</span>
+                            <span id="playerInhibition">75/75</span>
+                        </div>
+                        <div class="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                            <div id="playerInhibitionBar" class="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Clothing -->
+                    <div class="text-sm space-y-1">
+                        <div class="flex justify-between">
+                            <span>Upper Clothing</span>
+                            <span id="playerUpperClothing">100%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Lower Clothing</span>
+                            <span id="playerLowerClothing">100%</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Tension -->
+                    <div>
+                        <div class="flex justify-between mb-1 text-sm">
+                            <span>Tension</span>
+                            <span id="playerTension">0/100</span>
+                        </div>
+                        <div class="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                            <div id="playerTensionBar" class="h-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Arousal -->
+                    <div>
+                        <div class="flex justify-between mb-1 text-sm">
+                            <span>Arousal</span>
+                            <span id="playerArousal">0/100</span>
+                        </div>
+                        <div class="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                            <div id="playerArousalBar" class="h-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- AP Orbs -->
+                    <div>
+                        <div class="text-xs mb-2">AP Orbs</div>
+                        <div id="apOrbs" class="flex gap-1">
+                            <!-- AP orbs will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sarah's Status Panel - Top Right -->
+            <div id="sarahPanel" class="absolute z-10 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10" style="top: 24px; right: 24px; width: 208px; padding: 16px;">
+                <div class="space-y-3">
+                    <!-- Composure -->
+                    <div>
+                        <div class="flex justify-between mb-1 text-sm">
+                            <span>Composure</span>
+                            <span id="sarahComposure">100/100</span>
+                        </div>
+                        <div class="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                            <div id="sarahComposureBar" class="h-full bg-gradient-to-r from-pink-500 to-red-500 transition-all duration-300" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Inhibition -->
+                    <div>
+                        <div class="flex justify-between mb-1 text-sm">
+                            <span>Inhibition</span>
+                            <span id="sarahInhibition">75/75</span>
+                        </div>
+                        <div class="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                            <div id="sarahInhibitionBar" class="h-full bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Clothing -->
+                    <div class="text-sm space-y-1">
+                        <div class="flex justify-between">
+                            <span>Upper Clothing</span>
+                            <span id="sarahUpperClothing">100%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Lower Clothing</span>
+                            <span id="sarahLowerClothing">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline - Top Center -->
+            <div id="timeline" class="absolute z-10" style="top: 24px; left: 50%; transform: translateX(-50%);">
+                <div class="flex space-x-4">
+                    <div class="timeline-stage px-3 py-1 rounded border text-sm">Approach</div>
+                    <div class="timeline-stage px-3 py-1 rounded border text-sm">Close Quarters</div>
+                    <div class="timeline-stage px-3 py-1 rounded border text-sm">Embrace</div>
+                    <div class="timeline-stage px-3 py-1 rounded border text-sm">Intimacy</div>
+                </div>
+            </div>
+
+            <!-- Action Log - Bottom Left -->
+            <div id="actionLog" class="absolute z-10 bg-white/5 backdrop-blur-sm rounded-lg p-3 border border-white/10" style="bottom: 24px; left: 24px; width: 256px;">
+                <div class="text-white font-medium mb-2 text-sm">Recent Actions</div>
+                <div id="actionLogContent" class="text-white text-xs space-y-1 max-h-16 action-log"></div>
+            </div>
+
+            <!-- Game Controls - Bottom Right -->
+            <div id="gameControls" class="absolute z-10" style="bottom: 24px; right: 24px;">
+                <button id="endTurnButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg mb-2 text-sm">
+                    End Turn
+                </button>
+                <div id="gameStats" class="text-white space-y-1 text-xs">
+                    <div>Draw: <span id="drawCount">0</span></div>
+                    <div>Discards: <span id="discardCount">0</span></div>
+                    <div>Turn: <span id="turnNumber">1</span></div>
+                </div>
+            </div>
+
+            <!-- Card Hand - Bottom Center -->
+            <div id="cardHand" class="absolute flex space-x-2 z-10" style="bottom: 80px; left: 50%; transform: translateX(-50%);">
+                <!-- Cards will be generated dynamically -->
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="hidden absolute inset-0 flex items-center justify-center z-50">
+            <div class="bg-black/80 backdrop-blur-sm p-8 rounded-lg text-center" style="max-width: 400px;">
+                <h2 id="gameOverTitle" class="font-bold mb-4 text-4xl">🏆 Victory!</h2>
+                <p id="gameOverMessage" class="text-white mb-6 text-lg">
+                    Sarah has been overwhelmed. You win!
+                </p>
+                <div id="gameOverStats" class="text-white/60 mb-6 text-sm">
+                    Final Turn: <span id="finalTurn">1</span> | Intensity: <span id="finalIntensity">0</span>
+                </div>
+                <button id="playAgainButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors text-sm">
+                    Play Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === GAME STATE ===
+        const gameState = {
+            player: {
+                composure: 100,
+                composureMax: 100,
+                inhibition: 75,
+                inhibitionMax: 75,
+                focus: 0,
+                clothing: { upper: 100, lower: 100 },
+                isExposed: false,
+                tension: 0,
+                tensionMax: 100,
+                arousal: 0,
+                arousalMax: 100,
+                ap: 3,
+                apMax: 3,
+            },
+            sarah: {
+                composure: 100,
+                composureMax: 100,
+                inhibition: 75,
+                inhibitionMax: 75,
+                focus: 0,
+                clothing: { upper: 100, lower: 100 },
+                isExposed: false,
+            },
+            escalationState: 'Approach',
+            intensity: 0,
+            hand: [],
+            drawPile: [],
+            discardPile: [],
+            actionLog: ['Game started! Begin your approach to Sarah.'],
+            turnNumber: 1,
+            gameOver: false,
+            playerWon: null,
+        };
+
+        // === CARD DATA ===
+        const STARTING_DECK = [
+            // Verbal Cards (6)
+            { id: 'make_her_blush_1', name: 'Make Her Blush', class: 'Verbal', apCost: 1, effect: 'Deal 4 Composure damage to Sarah. Generate 5 Tension for yourself.', composureDamage: 4, tensionGain: 5 },
+            { id: 'make_her_blush_2', name: 'Make Her Blush', class: 'Verbal', apCost: 1, effect: 'Deal 4 Composure damage to Sarah. Generate 5 Tension for yourself.', composureDamage: 4, tensionGain: 5 },
+            { id: 'whisper_promise', name: 'Whisper a Filthy Promise', class: 'Verbal', apCost: 2, effect: 'Cost: 15 Tension. Deal 16 Composure damage to Sarah.', tensionCost: 15, composureDamage: 16 },
+            { id: 'read_body_1', name: 'Read Her Body Language', class: 'Verbal', apCost: 0, effect: 'Generate 2 Tension and 2 Arousal. Draw 1 card from your deck.', tensionGain: 2, arousalGain: 2, drawCards: 1 },
+            { id: 'read_body_2', name: 'Read Her Body Language', class: 'Verbal', apCost: 0, effect: 'Generate 2 Tension and 2 Arousal. Draw 1 card from your deck.', tensionGain: 2, arousalGain: 2, drawCards: 1 },
+            { id: 'seductive_distraction', name: 'Seductive Distraction', class: 'Verbal', apCost: 2, effect: 'Deal 10 Composure damage to Sarah. Generate 8 Tension for yourself.', composureDamage: 10, tensionGain: 8 },
+            { id: 'sensory_overload', name: 'Sensory Overload', class: 'Verbal', apCost: 2, effect: 'Deal 14 Composure damage to Sarah. Generate 6 Tension for yourself.', composureDamage: 14, tensionGain: 6 },
+            
+            // Physical Lower (3)
+            { id: 'caress_thigh_1', name: 'Caress Her Thigh', class: 'Physical Lower', apCost: 1, effect: 'Deal 8 Composure damage to Sarah (reduced by lower clothing guard). Generate 4 Arousal.', composureDamage: 8, arousalGain: 4 },
+            { id: 'caress_thigh_2', name: 'Caress Her Thigh', class: 'Physical Lower', apCost: 1, effect: 'Deal 8 Composure damage to Sarah (reduced by lower clothing guard). Generate 4 Arousal.', composureDamage: 8, arousalGain: 4 },
+            { id: 'tactile_override', name: 'Tactile Override', class: 'Physical Lower', apCost: 3, effect: 'Deal 20 Composure damage to Sarah. Generate 5 Tension and 5 Arousal.', composureDamage: 20, tensionGain: 5, arousalGain: 5 },
+            { id: 'firm_boundaries', name: 'Firm Boundaries', class: 'Physical Lower', apCost: 2, effect: 'Deal 10 Composure damage to Sarah. Gain 6 Focus for yourself.', composureDamage: 10, focusGain: 6 },
+            
+            // Physical Upper (3)
+            { id: 'fondle_breasts', name: 'Fondle Her Breasts', class: 'Physical Upper', apCost: 1, effect: 'Cost: 12 Arousal. Deal 22 Composure damage to Sarah (reduced by upper clothing guard).', arousalCost: 12, composureDamage: 22 },
+            { id: 'final_stand', name: 'Final Stand', class: 'Physical Upper', apCost: 2, effect: 'Deal 12 Composure damage to Sarah. Gain 12 Focus for yourself.', composureDamage: 12, focusGain: 12 },
+            { id: 'breaking_point', name: 'Breaking Point', class: 'Physical Upper', apCost: 3, effect: 'Cost: 20 Arousal. Deal 35 Composure damage to Sarah.', arousalCost: 20, composureDamage: 35 },
+            
+            // Defensive (6)
+            { id: 'steel_nerves_1', name: 'Steel Your Nerves', class: 'Defensive', apCost: 1, effect: 'Gain 8 Focus for yourself. Focus absorbs incoming damage before other defenses.', focusGain: 8 },
+            { id: 'steel_nerves_2', name: 'Steel Your Nerves', class: 'Defensive', apCost: 1, effect: 'Gain 8 Focus for yourself. Focus absorbs incoming damage before other defenses.', focusGain: 8 },
+            { id: 'resist_temptation', name: 'Resist Temptation', class: 'Defensive', apCost: 2, effect: 'Gain 15 Focus for yourself. Focus absorbs incoming damage before other defenses.', focusGain: 15 },
+            { id: 'mental_fortress', name: 'Mental Fortress', class: 'Defensive', apCost: 2, effect: 'Gain 20 Focus for yourself. Focus absorbs incoming damage before other defenses.', focusGain: 20 },
+            { id: 'reflex_training', name: 'Reflex Training', class: 'Defensive', apCost: 1, effect: 'Draw 2 cards from your deck. Generate 3 Tension for yourself.', drawCards: 2, tensionGain: 3 },
+            { id: 'controlled_breathing', name: 'Controlled Breathing', class: 'Defensive', apCost: 1, effect: 'Gain 10 Focus for yourself. Generate 2 Arousal for yourself.', focusGain: 10, arousalGain: 2 },
+        ];
+
+        // === GAME LOGIC FUNCTIONS ===
+        
+        function calculateGuarded(character) {
+            if (character.isExposed || character.inhibition === 0) {
+                return { upper: 0, lower: 0 };
+            }
+            return {
+                upper: character.clothing.upper,
+                lower: character.clothing.lower,
+            };
+        }
+
+        function calculateDamage(baseDamage, cardClass, guarded) {
+            if (cardClass === 'Verbal' || cardClass === 'Defensive') {
+                return baseDamage;
+            }
+            
+            if (cardClass === 'Physical Upper') {
+                const reduction = guarded.upper / 100;
+                return Math.floor(baseDamage * (1 - reduction));
+            }
+            
+            if (cardClass === 'Physical Lower' || cardClass === 'Intimate') {
+                const reduction = guarded.lower / 100;
+                return Math.floor(baseDamage * (1 - reduction));
+            }
+            
+            return baseDamage;
+        }
+
+        function applyDamage(character, damage) {
+            const log = [];
+            let remainingDamage = damage;
+            
+            // Layer 1: Focus absorbs damage
+            if (character.focus > 0 && remainingDamage > 0) {
+                const absorbed = Math.min(character.focus, remainingDamage);
+                character.focus -= absorbed;
+                remainingDamage -= absorbed;
+                
+                if (absorbed > 0) {
+                    log.push(`Focus absorbed ${absorbed} damage`);
+                }
+            }
+            
+            // Layer 2: Inhibition takes damage and affects clothing
+            if (remainingDamage > 0 && character.inhibition > 0) {
+                const inhibitionDamage = Math.min(character.inhibition, remainingDamage);
+                character.inhibition -= inhibitionDamage;
+                remainingDamage -= inhibitionDamage;
+                
+                // Update clothing protection based on remaining inhibition
+                const inhibitionPercent = (character.inhibition / character.inhibitionMax) * 100;
+                character.clothing.upper = Math.max(0, Math.floor(inhibitionPercent * 0.3));
+                character.clothing.lower = Math.max(0, Math.floor(inhibitionPercent * 0.3));
+                
+                log.push(`Inhibition -${inhibitionDamage} (Protection: ${character.clothing.upper}% upper, ${character.clothing.lower}% lower)`);
+                
+                // Check for exposure
+                if (character.inhibition === 0) {
+                    character.isExposed = true;
+                    log.push('⚠️ EXPOSED! Intimate cards now more effective');
+                }
+            }
+            
+            // Layer 3: Composure takes remaining damage
+            if (remainingDamage > 0) {
+                const composureDamage = Math.min(character.composure, remainingDamage);
+                character.composure -= composureDamage;
+                log.push(`Composure -${composureDamage}`);
+            }
+            
+            return { character, log };
+        }
+
+        function getEscalationState(intensity, sarahExposed) {
+            if (sarahExposed) return 'Intimacy';
+            if (intensity >= 50) return 'Embrace';
+            if (intensity >= 25) return 'Close Quarters';
+            return 'Approach';
+        }
+
+        function shuffle(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function canPlayCard(gameState, card) {
+            if (gameState.gameOver) return false;
+            
+            // Check AP cost
+            if (gameState.player.ap < card.apCost) return false;
+            
+            // Check resource costs
+            if (card.tensionCost && gameState.player.tension < card.tensionCost) return false;
+            if (card.arousalCost && gameState.player.arousal < card.arousalCost) return false;
+            
+            // Check special requirements
+            if (card.requiresExposed && !gameState.sarah.isExposed) return false;
+            
+            return true;
+        }
+
+        // Sarah AI actions
+        const SARAH_SMALL_ACTIONS = [
+            { description: "Sarah leans forward, her breath warm against your neck", damage: 3, tensionGain: 2 },
+            { description: "Her hand traces slowly along your inner thigh", damage: 4, arousalGain: 3 },
+            { description: "She whispers suggestively in your ear", damage: 3, tensionGain: 3 },
+            { description: "Her eyes lock with yours with predatory intensity", damage: 2, tensionGain: 2 },
+            { description: "She slowly unbuttons her top button, maintaining eye contact", damage: 3, arousalGain: 2 },
+            { description: "Her fingers brush against your chest deliberately", damage: 4, arousalGain: 2 },
+            { description: "She bites her lower lip while watching you", damage: 2, tensionGain: 3 },
+            { description: "Her hand slides up your arm with practiced ease", damage: 3, arousalGain: 2 },
+        ];
+
+        const SARAH_MEDIUM_ACTIONS = [
+            { description: "Sarah positions herself straddling you, her weight settling intimately", damage: 8, arousalGain: 5 },
+            { description: "Her hands explore your chest and arms with growing confidence", damage: 7, tensionGain: 4, arousalGain: 3 },
+            { description: "She guides your hands to her waist, pressing closer", damage: 8, arousalGain: 6 },
+            { description: "She moves close enough for you to feel her body heat radiating", damage: 6, tensionGain: 5, arousalGain: 3 },
+            { description: "Sarah grinds against you slowly, watching your reactions", damage: 9, arousalGain: 6 },
+            { description: "Her lips trace your jawline as her hands wander", damage: 8, tensionGain: 5, arousalGain: 4 },
+        ];
+
+        const SARAH_LARGE_ACTIONS = [
+            { description: "Sarah takes complete control, positioning you both for maximum vulnerability", damage: 15, arousalGain: 10 },
+            { description: "She demonstrates her complete dominance, overwhelming your defenses", damage: 14, tensionGain: 8, arousalGain: 8 },
+            { description: "Sarah initiates a full intimate encounter, leaving no room for resistance", damage: 16, arousalGain: 12 },
+            { description: "She orchestrates every movement, pushing you to your absolute limits", damage: 15, tensionGain: 7, arousalGain: 10 },
+        ];
+
+        function generateSarahActions(escalationState) {
+            const roll = Math.random();
+            const actions = [];
+            
+            if (escalationState === 'Approach' || escalationState === 'Close Quarters') {
+                if (roll < 0.6) {
+                    actions.push(
+                        SARAH_SMALL_ACTIONS[Math.floor(Math.random() * SARAH_SMALL_ACTIONS.length)],
+                        SARAH_SMALL_ACTIONS[Math.floor(Math.random() * SARAH_SMALL_ACTIONS.length)],
+                        SARAH_SMALL_ACTIONS[Math.floor(Math.random() * SARAH_SMALL_ACTIONS.length)]
+                    );
+                } else {
+                    actions.push(
+                        SARAH_MEDIUM_ACTIONS[Math.floor(Math.random() * SARAH_MEDIUM_ACTIONS.length)],
+                        SARAH_SMALL_ACTIONS[Math.floor(Math.random() * SARAH_SMALL_ACTIONS.length)]
+                    );
+                }
+            } else {
+                if (roll < 0.5) {
+                    actions.push(SARAH_LARGE_ACTIONS[Math.floor(Math.random() * SARAH_LARGE_ACTIONS.length)]);
+                } else if (roll < 0.75) {
+                    actions.push(
+                        SARAH_MEDIUM_ACTIONS[Math.floor(Math.random() * SARAH_MEDIUM_ACTIONS.length)],
+                        SARAH_SMALL_ACTIONS[Math.floor(Math.random() * SARAH_SMALL_ACTIONS.length)]
+                    );
+                } else {
+                    actions.push(
+                        SARAH_SMALL_ACTIONS[Math.floor(Math.random() * SARAH_SMALL_ACTIONS.length)],
+                        SARAH_SMALL_ACTIONS[Math.floor(Math.random() * SARAH_SMALL_ACTIONS.length)],
+                        SARAH_SMALL_ACTIONS[Math.floor(Math.random() * SARAH_SMALL_ACTIONS.length)]
+                    );
+                }
+            }
+            
+            return actions;
+        }
+
+        function applySarahAction(player, action) {
+            const playerCopy = { 
+                composure: player.composure,
+                composureMax: player.composureMax,
+                inhibition: player.inhibition,
+                inhibitionMax: player.inhibitionMax,
+                focus: player.focus,
+                clothing: { ...player.clothing },
+                isExposed: player.isExposed
+            };
+            
+            const damageResult = applyDamage(playerCopy, action.damage);
+            
+            const updatedPlayer = {
+                ...player,
+                composure: damageResult.character.composure,
+                inhibition: damageResult.character.inhibition,
+                focus: damageResult.character.focus,
+                clothing: damageResult.character.clothing,
+                isExposed: damageResult.character.isExposed
+            };
+            
+            const log = [action.description, ...damageResult.log];
+            
+            return { player: updatedPlayer, log };
+        }
+
+        function endTurn() {
+            const log = ['--- End Turn ---'];
+            
+            // Degrade Focus by 50%
+            const oldFocus = gameState.player.focus;
+            gameState.player.focus = Math.floor(gameState.player.focus / 2);
+            if (oldFocus > 0) {
+                log.push(`Focus degraded: ${oldFocus} → ${gameState.player.focus}`);
+            }
+            
+            // Sarah's turn with AI-generated actions
+            const sarahActions = generateSarahActions(gameState.escalationState);
+            
+            for (const action of sarahActions) {
+                const result = applySarahAction(gameState.player, action);
+                gameState.player = result.player;
+                log.push(...result.log);
+                
+                // Apply resource gains to player
+                if (action.tensionGain) {
+                    gameState.player.tension = Math.min(100, gameState.player.tension + action.tensionGain);
+                }
+                if (action.arousalGain) {
+                    gameState.player.arousal = Math.min(100, gameState.player.arousal + action.arousalGain);
+                }
+            }
+            
+            // Check lose condition
+            if (gameState.player.composure <= 0) {
+                gameState.gameOver = true;
+                gameState.playerWon = false;
+                log.push('💀 DEFEAT! You have been overwhelmed!');
+                showGameOver();
+            }
+            
+            // Reset for next turn
+            gameState.player.ap = gameState.player.apMax;
+            gameState.turnNumber++;
+            
+            // Update escalation state
+            const newEscalation = getEscalationState(gameState.intensity, gameState.sarah.isExposed);
+            if (newEscalation !== gameState.escalationState) {
+                log.push(`📈 Escalation: ${gameState.escalationState} → ${newEscalation}`);
+                gameState.escalationState = newEscalation;
+            }
+            
+            // Add to action log
+            gameState.actionLog = [...log, ...gameState.actionLog].slice(0, 8);
+            
+            updateUI();
+        }
+
+        function playCard(cardId) {
+            const cardIndex = gameState.hand.findIndex(c => c.id === cardId);
+            if (cardIndex === -1) return;
+            
+            const card = gameState.hand[cardIndex];
+            
+            // Validate card play
+            if (!canPlayCard(gameState, card)) return;
+            
+            const log = [`🎴 Played: ${card.name}`];
+            
+            // Remove card from hand and add to discard
+            gameState.hand = gameState.hand.filter((_, i) => i !== cardIndex);
+            gameState.discardPile.push(card);
+            
+            // Pay costs
+            gameState.player.ap -= card.apCost;
+            if (card.tensionCost) {
+                gameState.player.tension -= card.tensionCost;
+            }
+            if (card.arousalCost) {
+                gameState.player.arousal -= card.arousalCost;
+            }
+            
+            // Apply resource gains
+            if (card.tensionGain) {
+                gameState.player.tension = Math.min(100, gameState.player.tension + card.tensionGain);
+                log.push(`🔺 Tension +${card.tensionGain}`);
+            }
+            
+            if (card.arousalGain) {
+                gameState.player.arousal = Math.min(100, gameState.player.arousal + card.arousalGain);
+                log.push(`❤️ Arousal +${card.arousalGain}`);
+            }
+            
+            if (card.focusGain) {
+                gameState.player.focus += card.focusGain;
+                log.push(`🧠 Focus +${card.focusGain}`);
+            }
+            
+            // Apply damage to Sarah
+            if (card.composureDamage) {
+                const guarded = calculateGuarded(gameState.sarah);
+                const actualDamage = calculateDamage(card.composureDamage, card.class, guarded);
+                const result = applyDamage(gameState.sarah, actualDamage);
+                gameState.sarah = result.character;
+                log.push(...result.log);
+                
+                // Increase intensity based on damage dealt
+                gameState.intensity = Math.min(100, gameState.intensity + Math.floor(actualDamage / 2));
+            }
+            
+            // Draw cards if specified
+            if (card.drawCards) {
+                for (let i = 0; i < card.drawCards; i++) {
+                    if (gameState.drawPile.length === 0) {
+                        gameState.drawPile = shuffle(gameState.discardPile);
+                        gameState.discardPile = [];
+                        log.push('Draw pile empty - reshuffling discard pile');
+                    }
+                    const drawnCard = gameState.drawPile.shift();
+                    if (drawnCard) {
+                        gameState.hand.push(drawnCard);
+                    }
+                }
+                log.push(`🃏 Drew ${card.drawCards} card(s)`);
+            }
+            
+            // Update escalation state
+            const newEscalation = getEscalationState(gameState.intensity, gameState.sarah.isExposed);
+            if (newEscalation !== gameState.escalationState) {
+                log.push(`📈 Escalation: ${gameState.escalationState} → ${newEscalation}`);
+                gameState.escalationState = newEscalation;
+            }
+            
+            // Check win condition
+            if (gameState.sarah.composure <= 0) {
+                gameState.gameOver = true;
+                gameState.playerWon = true;
+                log.push('🏆 VICTORY! Sarah has been overwhelmed!');
+                showGameOver();
+            }
+            
+            // Update action log
+            gameState.actionLog = [...log, ...gameState.actionLog].slice(0, 8);
+            
+            updateUI();
+        }
+
+        function getCardClassColor(cardClass) {
+            switch (cardClass) {
+                case 'Verbal':
+                    return {
+                        border: 'border-orange-400',
+                        background: 'bg-orange-900/50',
+                        accent: 'text-orange-300',
+                        glow: 'shadow-orange-400/50'
+                    };
+                case 'Physical Upper':
+                    return {
+                        border: 'border-pink-400',
+                        background: 'bg-pink-900/50',
+                        accent: 'text-pink-300',
+                        glow: 'shadow-pink-400/50'
+                    };
+                case 'Physical Lower':
+                    return {
+                        border: 'border-purple-400',
+                        background: 'bg-purple-900/50',
+                        accent: 'text-purple-300',
+                        glow: 'shadow-purple-400/50'
+                    };
+                case 'Intimate':
+                    return {
+                        border: 'border-red-400',
+                        background: 'bg-red-900/50',
+                        accent: 'text-red-300',
+                        glow: 'shadow-red-400/50'
+                    };
+                case 'Defensive':
+                    return {
+                        border: 'border-blue-400',
+                        background: 'bg-blue-900/50',
+                        accent: 'text-blue-300',
+                        glow: 'shadow-blue-400/50'
+                    };
+                default:
+                    return {
+                        border: 'border-gray-400',
+                        background: 'bg-gray-900/50',
+                        accent: 'text-gray-300',
+                        glow: 'shadow-gray-400/50'
+                    };
+            }
+        }
+
+        // === UI UPDATE FUNCTIONS ===
+        
+        function updateUI() {
+            if (gameState.gameOver) return;
+            
+            updatePlayerPanel();
+            updateSarahPanel();
+            updateTimeline();
+            updateActionLog();
+            updateGameControls();
+            updateCardHand();
+        }
+
+        function updatePlayerPanel() {
+            document.getElementById('playerComposure').textContent = `${gameState.player.composure}/${gameState.player.composureMax}`;
+            document.getElementById('playerComposureBar').style.width = `${(gameState.player.composure / gameState.player.composureMax) * 100}%`;
+            
+            document.getElementById('playerInhibition').textContent = `${gameState.player.inhibition}/${gameState.player.inhibitionMax}`;
+            document.getElementById('playerInhibitionBar').style.width = `${(gameState.player.inhibition / gameState.player.inhibitionMax) * 100}%`;
+            
+            document.getElementById('playerUpperClothing').textContent = `${Math.floor(gameState.player.clothing.upper)}%`;
+            document.getElementById('playerLowerClothing').textContent = `${Math.floor(gameState.player.clothing.lower)}%`;
+            
+            document.getElementById('playerTension').textContent = `${gameState.player.tension}/${gameState.player.tensionMax}`;
+            const tensionBar = document.getElementById('playerTensionBar');
+            if (gameState.player.tension > 0) {
+                tensionBar.className = 'h-full bg-gradient-to-r from-red-500 to-orange-500 transition-all duration-300';
+                tensionBar.style.width = `${(gameState.player.tension / gameState.player.tensionMax) * 100}%`;
+            } else {
+                tensionBar.className = 'h-full bg-transparent border border-white/30 transition-all duration-300';
+                tensionBar.style.width = '0%';
+            }
+            
+            document.getElementById('playerArousal').textContent = `${gameState.player.arousal}/${gameState.player.arousalMax}`;
+            const arousalBar = document.getElementById('playerArousalBar');
+            if (gameState.player.arousal > 0) {
+                arousalBar.className = 'h-full bg-gradient-to-r from-pink-500 to-purple-500 transition-all duration-300';
+                arousalBar.style.width = `${(gameState.player.arousal / gameState.player.arousalMax) * 100}%`;
+            } else {
+                arousalBar.className = 'h-full bg-transparent border border-white/30 transition-all duration-300';
+                arousalBar.style.width = '0%';
+            }
+            
+            // Update AP orbs
+            updateAPOrbs();
+        }
+
+        function updateAPOrbs() {
+            const apContainer = document.getElementById('apOrbs');
+            apContainer.innerHTML = '';
+            
+            for (let i = 0; i < gameState.player.apMax; i++) {
+                const orb = document.createElement('div');
+                orb.className = i < gameState.player.ap 
+                    ? 'ap-orb-active rounded-full border-2 border-cyan-200 transition-all duration-200' 
+                    : 'ap-orb-inactive rounded-full border-2 border-gray-600 transition-all duration-200';
+                orb.style.width = '20px';
+                orb.style.height = '20px';
+                apContainer.appendChild(orb);
+            }
+        }
+
+        function updateSarahPanel() {
+            document.getElementById('sarahComposure').textContent = `${gameState.sarah.composure}/${gameState.sarah.composureMax}`;
+            document.getElementById('sarahComposureBar').style.width = `${(gameState.sarah.composure / gameState.sarah.composureMax) * 100}%`;
+            
+            document.getElementById('sarahInhibition').textContent = `${gameState.sarah.inhibition}/${gameState.sarah.inhibitionMax}`;
+            document.getElementById('sarahInhibitionBar').style.width = `${(gameState.sarah.inhibition / gameState.sarah.inhibitionMax) * 100}%`;
+            
+            document.getElementById('sarahUpperClothing').textContent = `${Math.floor(gameState.sarah.clothing.upper)}%`;
+            document.getElementById('sarahLowerClothing').textContent = `${Math.floor(gameState.sarah.clothing.lower)}%`;
+        }
+
+        function updateTimeline() {
+            const stages = ['Approach', 'Close Quarters', 'Embrace', 'Intimacy'];
+            const timelineStages = document.querySelectorAll('.timeline-stage');
+            
+            timelineStages.forEach((stage, index) => {
+                if (stages[index] === gameState.escalationState) {
+                    stage.className = 'timeline-stage px-3 py-1 rounded border bg-cyan-400/20 border-cyan-400 text-cyan-300 text-sm glow-cyan';
+                } else {
+                    stage.className = 'timeline-stage px-3 py-1 rounded border bg-white/5 border-white/20 text-white/60 text-sm';
+                }
+            });
+        }
+
+        function updateActionLog() {
+            const logContainer = document.getElementById('actionLogContent');
+            logContainer.innerHTML = '';
+            
+            gameState.actionLog.slice(0, 3).forEach(action => {
+                const logEntry = document.createElement('div');
+                logEntry.className = 'opacity-80';
+                logEntry.textContent = action;
+                logContainer.appendChild(logEntry);
+            });
+        }
+
+        function updateGameControls() {
+            document.getElementById('drawCount').textContent = gameState.drawPile.length;
+            document.getElementById('discardCount').textContent = gameState.discardPile.length;
+            document.getElementById('turnNumber').textContent = gameState.turnNumber;
+        }
+
+        function updateCardHand() {
+            const cardHand = document.getElementById('cardHand');
+            cardHand.innerHTML = '';
+            
+            gameState.hand.forEach((card, index) => {
+                const canPlayCardCheck = canPlayCard(gameState, card);
+                const colors = getCardClassColor(card.class);
+                
+                const cardElement = document.createElement('div');
+                cardElement.className = `relative transition-all duration-200 cursor-pointer select-none ${canPlayCardCheck ? 'card-hover' : 'opacity-50 cursor-not-allowed'}`;
+                cardElement.style.transform = `translateY(${Math.abs(index - 2) * 2}px)`;
+                
+                cardElement.innerHTML = `
+                    <div class="w-32 rounded-lg p-2 border-2 backdrop-blur-sm shadow-lg transition-all duration-200 ${colors.border} ${colors.background}">
+                        <div class="text-white font-bold text-xs mb-1 text-center leading-tight">${card.name}</div>
+                        <div class="${colors.accent} text-xs text-center mb-2 font-medium">${card.class}</div>
+                        <div class="text-yellow-300 text-xs text-center mb-2 font-semibold">AP: ${card.apCost}</div>
+                        <div class="text-white/90 text-xs">
+                            ${card.composureDamage ? `<div class="text-red-300 font-medium">${card.composureDamage} dmg</div>` : ''}
+                            ${card.tensionGain ? `<div class="text-orange-300">T +${card.tensionGain}</div>` : ''}
+                            ${card.arousalGain ? `<div class="text-pink-300">A +${card.arousalGain}</div>` : ''}
+                            ${card.focusGain ? `<div class="text-blue-300">F +${card.focusGain}</div>` : ''}
+                            ${card.drawCards ? `<div class="text-green-300">Draw ${card.drawCards}</div>` : ''}
+                        </div>
+                        ${canPlayCardCheck ? '<div class="absolute -top-1 -right-1 w-3 h-3 bg-cyan-400 rounded-full glow-cyan"></div>' : '<div class="absolute -top-1 -right-1 w-3 h-3 bg-gray-600 rounded-full"></div>'}
+                    </div>
+                `;
+                
+                if (canPlayCardCheck) {
+                    cardElement.addEventListener('click', () => playCard(card.id));
+                }
+                
+                cardHand.appendChild(cardElement);
+            });
+        }
+
+        function showGameOver() {
+            document.getElementById('gameUI').classList.add('hidden');
+            document.getElementById('gameOverScreen').classList.remove('hidden');
+            
+            if (gameState.playerWon) {
+                document.getElementById('gameOverTitle').textContent = '🏆 Victory!';
+                document.getElementById('gameOverMessage').textContent = 'Sarah has been overwhelmed. You win!';
+            } else {
+                document.getElementById('gameOverTitle').textContent = '💀 Defeat';
+                document.getElementById('gameOverMessage').textContent = 'You have been overwhelmed. Try again.';
+            }
+            
+            document.getElementById('finalTurn').textContent = gameState.turnNumber;
+            document.getElementById('finalIntensity').textContent = gameState.intensity;
+        }
+
+        function resetGame() {
+            gameState.player = {
+                composure: 100,
+                composureMax: 100,
+                inhibition: 75,
+                inhibitionMax: 75,
+                focus: 0,
+                clothing: { upper: 100, lower: 100 },
+                isExposed: false,
+                tension: 0,
+                tensionMax: 100,
+                arousal: 0,
+                arousalMax: 100,
+                ap: 3,
+                apMax: 3,
+            };
+            gameState.sarah = {
+                composure: 100,
+                composureMax: 100,
+                inhibition: 75,
+                inhibitionMax: 75,
+                focus: 0,
+                clothing: { upper: 100, lower: 100 },
+                isExposed: false,
+            };
+            gameState.escalationState = 'Approach';
+            gameState.intensity = 0;
+            gameState.hand = [...STARTING_DECK];
+            gameState.drawPile = [];
+            gameState.discardPile = [];
+            gameState.actionLog = ['Game reset! Begin your approach to Sarah.'];
+            gameState.turnNumber = 1;
+            gameState.gameOver = false;
+            gameState.playerWon = null;
+            
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            document.getElementById('gameUI').classList.remove('hidden');
+            
+            updateUI();
+        }
+
+        // === EVENT LISTENERS ===
+        document.getElementById('startButton').addEventListener('click', function() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('gameUI').classList.remove('hidden');
+            
+            // Initialize game
+            gameState.hand = [...STARTING_DECK];
+            updateUI();
+            
+            // Start video
+            const video = document.getElementById('backgroundVideo');
+            video.play().catch(e => console.log('Video autoplay failed:', e));
+        });
+
+        document.getElementById('endTurnButton').addEventListener('click', endTurn);
+        document.getElementById('playAgainButton').addEventListener('click', resetGame);
+
+        // Screen size info
+        function updateScreenInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const baseWidth = 1920;
+            const baseHeight = 1080;
+            const widthScale = width / baseWidth;
+            const heightScale = height / baseHeight;
+            const scale = Math.max(0.5, Math.min(1.5, Math.min(widthScale, heightScale)));
+            
+            document.getElementById('screenInfo').textContent = `Scale: ${scale.toFixed(2)}x | Screen: ${width}x${height}`;
+        }
+
+        window.addEventListener('resize', updateScreenInfo);
+        updateScreenInfo();
+
+        // Video error handling
+        document.getElementById('backgroundVideo').addEventListener('error', function(e) {
+            console.log('Video failed to load:', e);
+        });
+
+        document.getElementById('backgroundVideo').addEventListener('canplay', function() {
+            console.log('Video can start playing');
+        });
+    </script>
+</body>
+</html>
